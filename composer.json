@@ -1,0 +1,24 @@
+{
+    "name": "cinghie/yii2-paypal",
+    "description": "Yii2 Paypal to manage Paypal Payments on your Yii 2 project",
+    "keywords": ["yii2", "yii2 paypal", "yii2 payments", "yii2 paypal payments", "paypal", "payments"],
+    "homepage": "https://github.com/cinghie/yii2-paypal",
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Gogodigital.it",
+            "email": "info@gogodigital.it",
+            "homepage": "http://www.gogodigital.it/"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "paypal/rest-api-sdk-php": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "cinghie\\paypal\\": ""
+        }
+    }
+}
