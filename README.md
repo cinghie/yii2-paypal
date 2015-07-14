@@ -26,5 +26,7 @@ Changelog
 -----------------
 
 <ul>
+  <li>Version 0.1.1 - Editing Code from https://github.com/marciocamello/yii2-paypal</li>
+  <li>Version 0.1.0 - Adding Code from https://github.com/marciocamello/yii2-paypal</li>
   <li>Version 0.0.1 - Initial Release</li>
 </ul>
