@@ -7,7 +7,7 @@
  * @github https://github.com/cinghie/yii2-paypal
  * @license GNU GENERAL PUBLIC LICENSE VERSION 3
  * @package yii2-paypal
- * @version 0.1.1
+ * @version 0.2.1
  */
 
 namespace cinghie\paypal\components;
