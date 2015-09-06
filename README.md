@@ -31,14 +31,29 @@ Add in your configuration file, in component section:
     'isProduction' => false,
      // This is config file for the PayPal system
      'config'       => [
+         'mode' => 'sandbox', // development (sandbox) or production (live) mode
+    ]
+],
+```
+
+<ul>
+  <li>clientid => your Paypal clientId</li>
+  <li>clientSecret => your Paypal clientSecret</li>
+  <li>isProduction => set yes if your site is on Production Mode, false otherwise</li>
+  <li>mode => set 'sandbox' if your site is on Development Mode, or 'live' on Production Mode</li>
+</ul>
+
+You can set advanced settings in config array:
+
+```
+     'config'       => [
          'http.ConnectionTimeOut' => 30,
          'http.Retry' => 1,
          'mode' => 'sandbox', // development (sandbox) or production (live) mode
          'log.LogEnabled' => YII_DEBUG ? 1 : 0,
-         'log.FileName' => 'F:/xampp/htdocs/yii2/runtime/logs/paypal.log', // '@runtime/logs/paypal.log'
+         'log.FileName' => Yii::getAlias('@runtime/logs/paypal.log'),
          'log.LogLevel' => 'ERROR',
-    ]
-],
+    ],
 ```
 
 Changelog
