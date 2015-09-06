@@ -38,7 +38,7 @@ class Paypal extends Component
 	// The clientId and clientSecret for the OAuthTokenCredential class 
     // can be retrieved from developer.paypal.com
 	function init() 
-	{ 
+	{
 		// Set _apiContext
 		$this->_apiContext = new ApiContext(
             new OAuthTokenCredential(
@@ -64,7 +64,7 @@ class Paypal extends Component
 		// Write Log
 		if ( isset($this->config['log.FileName']) && isset($this->config['log.LogEnabled']) && ((bool)$this->config['log.LogEnabled'] == true) )
 		{
-            $logFileName = \Yii::getAlias($this->config['log.FileName']);
+            $logFileName = Yii::getAlias($this->config['log.FileName']);
             if ($logFileName)
 			{
                 if (!file_exists($logFileName))
