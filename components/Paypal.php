@@ -93,7 +93,6 @@ class Paypal extends Component
         $payment      = Helper::setPaypalPayment("sale",$payer,$redirectUrls,$transaction);
 
         return $payment->create($this->_apiContext);
-
     }
 
     public function getLink(array $links, $type) {
