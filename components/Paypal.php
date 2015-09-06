@@ -16,17 +16,7 @@ use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
 
-use PayPal\Api\Address;
-use PayPal\Api\Amount;
-use PayPal\Api\CreditCard;
-use PayPal\Api\Details;
-use PayPal\Api\FundingInstrument;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
+use cinghie\paypal\components\Helper;
 
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
@@ -37,7 +27,7 @@ class Paypal extends Component
 	// API SETTINGS
 	public $clientId;
     public $clientSecret;
-    public $currency = 'EUR';
+    public $currency = 'USD';
     public $config = [];
 	
 	// API CONTEXT
@@ -56,7 +46,7 @@ class Paypal extends Component
                 $this->clientSecret
             )
         );
-		
+
 		// Config _apiContext
 		$this->_apiContext->setConfig(
 			ArrayHelper::merge([
@@ -70,14 +60,14 @@ class Paypal extends Component
                 'cache.enabled'          => 'true'
             ],$this->config)
 		);
-		
+
 		// Write Log
-		if ( isset($this->config['log.FileName']) && isset($this->config['log.LogEnabled']) && ((bool)$this->config['log.LogEnabled'] == true) ) 
+		if ( isset($this->config['log.FileName']) && isset($this->config['log.LogEnabled']) && ((bool)$this->config['log.LogEnabled'] == true) )
 		{
             $logFileName = \Yii::getAlias($this->config['log.FileName']);
-            if ($logFileName) 
+            if ($logFileName)
 			{
-                if (!file_exists($logFileName)) 
+                if (!file_exists($logFileName))
 				{
                     if (!touch($logFileName)) {
                         throw new ErrorException('Can\'t create paypal.log file at: ' . $logFileName);
@@ -86,87 +76,33 @@ class Paypal extends Component
             }
             $this->config['log.FileName'] = $logFileName;
         }
-		
+
 		return $this->_apiContext;
 	}
-	
-	// Test a Paypal Demo
-	public function getDemo()
+
+    public function getDemoPaymentUsingPayPal($baseUrl)
     {
- 		$addr       = $this->setAddress('52 N Main ST','Johnstown','US','43210','OH');
-		$amount     = $this->setAmount('USD','0.99');
-		$card       = $this->setCard('4417119669820331','visa','11','2018','874','Giando','Yii2 Shopper',$addr); 
-        
-		$fi = new FundingInstrument();
-        $fi->setCreditCard($card);
-        
-		$payer = new Payer();
-        $payer->setPaymentMethod('credit_card');
-        $payer->setFundingInstruments(array($fi));
-        
-		$transaction = $this->setTransaction($amount,'This is the payment transaction description.');
-		$payment     = $this->setPayment('sale',$payer,$transaction);
-        
-		return $payment->create($this->_apiContext);
+        $payer        = Helper::setPaypalPayer("paypal");
+        $item1        = Helper::setPaypalItem("Ground Coffee 40 oz","USD",1,"123123",7.5);
+        $item2        = Helper::setPaypalItem("Granola bars","USD",5,"321321",2);
+        $itemList     = Helper::setPaypalItemList(array($item1,$item2));
+        $details      = Helper::setPaypalDetails(1.2,1.3,17.5);
+        $amount       = Helper::setPaypalAmount("USD",20.0,$details);
+        $transaction  = Helper::setPaypalTransaction($amount,"Payment description",uniqid(),$itemList);
+        $redirectUrls = Helper::setPaypalRedirectUrls($baseUrl."ExecutePayment.php?success=true",$baseUrl."ExecutePayment.php?success=false");
+        $payment      = Helper::setPaypalPayment("sale",$payer,$redirectUrls,$transaction);
+
+        return $payment->create($this->_apiContext);
+
     }
-	
-	// Set Address Item
-	public function setAddress($line1,$city,$countryCode,$postalCode,$state)
-	{
-		$address = new Address();
-        $address->setLine1($line1);
-        $address->setCity($city);
-        $address->setCountryCode($countryCode);
-        $address->setPostalCode($postalCode);
-        $address->setState($state);
-		
-		return $address;
-	}
-	
-	// Set Amount
-	public function setAmount($currency,$total)
-	{
-		$amount = new Amount();
-        $amount->setCurrency($currency);
-        $amount->setTotal($total);
-		
-		return $amount;
-	}
-	
-	// Set Card
-	public function setCard($number,$type,$expireMonth,$expireYear,$cvv2,$firstname,$lastname,$addr)
-	{
-		$card = new CreditCard();
-        $card->setNumber($number);
-        $card->setType($type);
-        $card->setExpireMonth($expireMonth);
-        $card->setExpireYear($expireYear);
-        $card->setCvv2($cvv2);
-        $card->setFirstName($firstname);
-        $card->setLastName($lastname);
-        $card->setBillingAddress($addr);
-		
-		return $card;
-	}
-	
-	// Set Transaction
-	public function setTransaction($amount,$descr)
-	{
-		$transaction = new Transaction();
-        $transaction->setAmount($amount);
-        $transaction->setDescription($descr);
-		
-		return $transaction;
-	}
-	
-	// Set Payment
-	public function setPayment($intent,$payer,$transaction)
-	{
-		$payment = new Payment();
-        $payment->setIntent($intent);
-        $payment->setPayer($payer);
-        $payment->setTransactions(array($transaction));
-		
-		return $payment;
-	}
+
+    public function getLink(array $links, $type) {
+        foreach($links as $link) {
+            if($link->getRel() == $type) {
+                return $link->getHref();
+            }
+        }
+        return "";
+    }
+
 }
