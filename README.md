@@ -60,6 +60,8 @@ Changelog
 -----------------
 
 <ul>
+  <li>Version 0.2.1 - Adding Demo Payment Using PayPal</li>
+  <li>Version 0.2.0 - Adding Helper class</li>
   <li>Version 0.1.1 - Editing Code from https://github.com/marciocamello/yii2-paypal</li>
   <li>Version 0.1.0 - Adding Code from https://github.com/marciocamello/yii2-paypal</li>
   <li>Version 0.0.1 - Initial Release</li>
