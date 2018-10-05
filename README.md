@@ -1,4 +1,4 @@
-# Yii2 Paypal
+# Yii2 Paypal (Abbandoned)
 Yii2 Paypal Extension to manage Paypal Payments
 
 Installation
