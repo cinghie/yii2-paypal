@@ -32,11 +32,27 @@ Note: To show your live app information, toggle to Live.
 
 5. Review your app details and save your app.
 
-### Documentaion
+### Create sandbox accounts
+
+1. Log into Dashboard and type your PayPal business account email and password.  
+Note: If you do not have a business account, click Sign Up.
+
+2. Under Sandbox, click Accounts and click Create Account.
+
+3. To create the buyer account, select the personal account type.  
+Type these required and any optional fields and click Create Account:  
+
+ - Email Address. A fake or valid email address. If you use a valid address, you receive email notifications when you run test transactions    
+ - Password. An easy-to-remember password, such as 12345678  
+ - PayPal Balance. A high amount, such as 5000  
+
+4. To create the merchant account, select the business account type, type account information, and click Create Account  
+
+### Documentation
 
 API: https://developer.paypal.com/docs/api/overview  
-Documentation: https://developer.paypal.com/docs
-Support: https://developer.paypal.com/support/
+Documentation: https://developer.paypal.com/docs  
+Support: https://developer.paypal.com/support/  
 
 ## Configuration
 
