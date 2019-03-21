@@ -1,25 +1,44 @@
-# Yii2 Paypal (Abbandoned)
+# Yii2 PayPal
 Yii2 Paypal Extension to manage Paypal Payments
 
-Installation
------------------
+## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
 Either run
 
 ```
-php composer.phar require cinghie/yii2-paypal "*"
+php composer.phar require cinghie/yii2-paypal "@dev"
 ```
 
 or add this line to the require section of your `composer.json` file.
 
 ```
-"cinghie/yii2-paypal": "*"
+"cinghie/yii2-paypal": "@dev"
 ```
 
-Configuration
------------------
+## PayPal
+
+### Get credentials
+
+1. Log into Dashboard and type your PayPal business account email and password.
+
+2. In the REST API apps section, click Create App. The purpose of this app is to generate your credentials.
+
+3. Type a name for your app and click Create App. The page shows your sandbox app information, which includes your credentials.  
+Note: To show your live app information, toggle to Live.
+
+4. Copy and save the client ID and secret for your sandbox app.
+
+5. Review your app details and save your app.
+
+### Documentaion
+
+API: https://developer.paypal.com/docs/api/overview  
+Documentation: https://developer.paypal.com/docs
+Support: https://developer.paypal.com/support/
+
+## Configuration
 
 Add in your configuration file, in component section:
 
@@ -55,14 +74,3 @@ You can set advanced settings in config array:
          'log.LogLevel' => 'ERROR',
     ],
 ```
-
-Changelog
------------------
-
-<ul>
-  <li>Version 0.2.1 - Adding Demo Payment Using PayPal</li>
-  <li>Version 0.2.0 - Adding Helper class</li>
-  <li>Version 0.1.1 - Editing Code from https://github.com/marciocamello/yii2-paypal</li>
-  <li>Version 0.1.0 - Adding Code from https://github.com/marciocamello/yii2-paypal</li>
-  <li>Version 0.0.1 - Initial Release</li>
-</ul>
