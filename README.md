@@ -51,16 +51,17 @@ Type these required and any optional fields and click Create Account:
 
 ### Documentation
 
-API: https://developer.paypal.com/docs/api/overview  
-Documentation: https://developer.paypal.com/docs  
+Documentation: http://paypal.github.io/PayPal-PHP-SDK/docs/   
+Sample: http://paypal.github.io/PayPal-PHP-SDK/sample/    
 Support: https://developer.paypal.com/support/  
+Wiki: https://github.com/paypal/PayPal-PHP-SDK/wiki  
 
 ## Configuration
 
 Add in your configuration file, in component section:
 
 ```
-'paypal'=> [
+'paypal' => [
     'class'        => 'cinghie\paypal\components\PayPal',
     'clientId'     => 'YOUR_CLIENT_ID',
     'clientSecret' => 'YOUR_CLIENT_SECRET',
@@ -81,12 +82,20 @@ Add in your configuration file, in component section:
 You can set advanced settings in config array:
 
 ```
-     'config'       => [
-         'http.ConnectionTimeOut' => 30,
-         'http.Retry' => 1,
-         'mode' => 'sandbox', // development (sandbox) or production (live) mode
-         'log.LogEnabled' => YII_DEBUG ? 1 : 0,
-         'log.FileName' => Yii::getAlias('@runtime/logs/paypal.log'),
-         'log.LogLevel' => 'ERROR',
-    ],
+'config' => [
+	'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode) 
+    'http.ConnectionTimeOut' => 30,
+    'http.Retry' => 1,
+    'log.LogEnabled' => YII_DEBUG ? 1 : 0,
+    'log.FileName' => Yii::getAlias('@runtime/logs/paypal.log'),
+    'log.LogLevel' => 'ERROR',
+],
+```
+
+## Create database schema
+
+Run the following command:
+
+```
+$ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-paypal/migrations
 ```
