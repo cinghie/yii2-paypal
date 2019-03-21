@@ -65,7 +65,7 @@ Add in your configuration file, in component section:
     'clientId'     => 'YOUR_CLIENT_ID',
     'clientSecret' => 'YOUR_CLIENT_SECRET',
     'isProduction' => false,
-    'config'       => [
+    'config' => [
     	'mode' => 'sandbox', // development (sandbox) or production (live) mode
     ]
 ],
