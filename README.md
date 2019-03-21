@@ -87,7 +87,7 @@ You can set advanced settings in config array:
     'http.ConnectionTimeOut' => 30,
     'http.Retry' => 1,
     'log.LogEnabled' => YII_DEBUG ? 1 : 0,
-    'log.FileName' => Yii::getAlias('@runtime/logs/paypal.log'),
+    'log.FileName' => '@runtime/logs/paypal.log',
     'log.LogLevel' => 'ERROR',
 ],
 ```

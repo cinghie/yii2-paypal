@@ -20,36 +20,27 @@ use yii\base\InvalidConfigException;
 
 /**
  * Class Paypal
- *
- * @package cinghie\paypal\components
  */
 class Paypal extends Component
 {
-	/**
-	 * PayPal Mode
-	 */
-	const MODE_LIVE = 'live';
-	const MODE_SANDBOX = 'sandbox';
-
-	/**
-     * PayPal Logging levels
-     */
-	const LOG_LEVEL_FINE  = 'FINE';
-	const LOG_LEVEL_INFO  = 'INFO';
-	const LOG_LEVEL_WARN  = 'WARN';
-	const LOG_LEVEL_ERROR = 'ERROR';
-
-	/**
-	 * Class Property
-	 */
+	/** @var string $clientId  */
 	public $clientId = '';
+
+	/** @var string $clientSecret  */
 	public $clientSecret = '';
-	public $isProduction = false;
-	public $currency = 'USD';
+
+	/** @var array $config */
 	public $config = [];
+
+	/** @var boolean $isProduction */
+	public $isProduction;
+
+	/** @var ApiContext $_apiContext */
 	private $_apiContext;
 
 	/**
+	 * @inheritdoc
+	 *
 	 * @param array $config
 	 *
 	 * @throws InvalidConfigException
@@ -66,15 +57,41 @@ class Paypal extends Component
 
 		$this->clientId = $config['clientId'];
 		$this->clientSecret = $config['clientSecret'];
+		$this->config = isset($config['config']) ? $config['config'] : [];
+		$this->isProduction = isset($config['isProduction']) ? $config['isProduction'] : $config['isProduction'] = false;
 
 		parent::__construct($config);
 	}
 
 	/**
-	 * @see
+	 * @inheritdoc
 	 */
 	public function init()
 	{
+		if(!isset($this->config['mode'])) {
+			$this->config['mode'] = 'sandbox';
+		}
+
+		if(!isset($this->config['http.ConnectionTimeOut'])) {
+			$this->config['http.ConnectionTimeOut'] = 30;
+		}
+
+		if(!isset($this->config['http.Retry'])) {
+			$this->config['http.Retry'] = 1;
+		}
+
+		if(!isset($this->config['log.LogEnabled'])) {
+			$this->config['log.LogEnabled'] = YII_DEBUG ? 1 : 0;
+		}
+
+		if(!isset($this->config['log.FileName'])) {
+			$this->config['log.FileName'] = '@runtime/logs/paypal.log';
+		}
+
+		if(!isset($this->config['log.LogLevel'])) {
+			$this->config['log.LogLevel'] = 'ERROR';
+		}
+
 		$this->_apiContext = new ApiContext(
 			new OAuthTokenCredential(
 				$this->clientId,
@@ -82,6 +99,16 @@ class Paypal extends Component
 			)
 		);
 
-		var_dump($this->_apiContext); exit();
+		if($this->config['log.LogEnabled'])
+		{
+			$logFileName = \Yii::getAlias($this->config['log.FileName']);
+
+			if (!file_exists($logFileName) && !touch($logFileName))
+			{
+				throw new ErrorException('Can\'t create paypal.log file at: ' . $logFileName);
+			}
+		}
+
+		return $this->_apiContext;
 	}
 }
