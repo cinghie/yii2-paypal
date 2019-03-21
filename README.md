@@ -42,7 +42,8 @@ Note: If you do not have a business account, click Sign Up.
 3. To create the buyer account, select the personal account type.  
 Type these required and any optional fields and click Create Account:  
   
-   - Email Address: A fake or valid email address. If you use a valid address, you receive email notifications when you run test transactions    
+   - Email Address: A fake or valid email address.  
+   If you use a valid address, you receive email notifications when you run test transactions    
    - Password: An easy-to-remember password, such as 12345678  
    - PayPal Balance: A high amount, such as 5000  
 
