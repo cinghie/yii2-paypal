@@ -82,7 +82,7 @@ Add in your configuration file, in component section:
 You can set advanced settings in config array:
 
 ```
-'config' => [
+'config' => [  
 	'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode) 
     'http.ConnectionTimeOut' => 30,
     'http.Retry' => 1,
@@ -98,4 +98,10 @@ Run the following command:
 
 ```
 $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-paypal/migrations
+```
+
+## Use Component
+
+```
+\Yii::$app->paypal;
 ```

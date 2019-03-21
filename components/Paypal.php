@@ -64,6 +64,9 @@ class Paypal extends Component
 			throw new InvalidConfigException(Yii::t('paypal', 'PayPal clientSecret missing!'));
 		}
 
+		$this->clientId = $config['clientId'];
+		$this->clientSecret = $config['clientSecret'];
+
 		parent::__construct($config);
 	}
 
@@ -78,5 +81,7 @@ class Paypal extends Component
 				$this->clientSecret
 			)
 		);
+
+		var_dump($this->_apiContext); exit();
 	}
 }
