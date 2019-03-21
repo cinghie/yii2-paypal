@@ -1,5 +1,5 @@
 # Yii2 PayPal
-Yii2 Paypal Extension to manage Paypal Payments
+Yii2 PayPal Extension to manage PayPal Payments
 
 ## Installation
 
@@ -61,7 +61,7 @@ Add in your configuration file, in component section:
 
 ```
 'paypal'=> [
-    'class'        => 'cinghie\paypal\components\Paypal',
+    'class'        => 'cinghie\paypal\components\PayPal',
     'clientId'     => 'YOUR_CLIENT_ID',
     'clientSecret' => 'YOUR_CLIENT_SECRET',
     'isProduction' => false,
@@ -73,8 +73,8 @@ Add in your configuration file, in component section:
 ```
 
 <ul>
-  <li>clientid => your Paypal clientId</li>
-  <li>clientSecret => your Paypal clientSecret</li>
+  <li>clientid => your PayPal clientId</li>
+  <li>clientSecret => your PayPal clientSecret</li>
   <li>isProduction => set yes if your site is on Production Mode, false otherwise</li>
   <li>mode => set 'sandbox' if your site is on Development Mode, or 'live' on Production Mode</li>
 </ul>
