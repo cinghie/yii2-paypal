@@ -65,9 +65,8 @@ Add in your configuration file, in component section:
     'clientId'     => 'YOUR_CLIENT_ID',
     'clientSecret' => 'YOUR_CLIENT_SECRET',
     'isProduction' => false,
-     // This is config file for the PayPal system
-     'config'       => [
-         'mode' => 'sandbox', // development (sandbox) or production (live) mode
+    'config'       => [
+    	'mode' => 'sandbox', // development (sandbox) or production (live) mode
     ]
 ],
 ```
