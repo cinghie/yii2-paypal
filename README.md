@@ -53,6 +53,7 @@ Type these required and any optional fields and click Create Account:
 
 Documentation: http://paypal.github.io/PayPal-PHP-SDK/docs/   
 Sample: http://paypal.github.io/PayPal-PHP-SDK/sample/    
+Sandbox: https://www.sandbox.paypal.com/  
 Support: https://developer.paypal.com/support/  
 Wiki: https://github.com/paypal/PayPal-PHP-SDK/wiki  
 

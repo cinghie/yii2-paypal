@@ -141,7 +141,7 @@ class Paypal extends Component
 		$card->setNumber('4417119669820331');
 		$card->setType('visa');
 		$card->setExpireMonth('11');
-		$card->setExpireYear('2020');
+		$card->setExpireYear('2030');
 		$card->setCvv2('874');
 		$card->setFirstName('Joe');
 		$card->setLastName('Shopper');
