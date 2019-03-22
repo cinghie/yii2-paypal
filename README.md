@@ -62,7 +62,7 @@ Add in your configuration file, in component section:
 
 ```
 'paypal' => [
-	'class'        => 'cinghie\paypal\components\PayPal',
+	'class'        => 'cinghie\paypal\components\Paypal',
 	'clientId'     => 'YOUR_CLIENT_ID',
 	'clientSecret' => 'YOUR_CLIENT_SECRET',
 	'isProduction' => false,
@@ -96,7 +96,7 @@ Add in your configuration file, in module section:
 
 ```
 'paypal' => [
-	'class' => 'cinghie\paypal\PayPal',
+	'class' => 'cinghie\paypal\Paypal',
 	'roles' => ['admin'],
 	'showTitles' => false,
 ],
