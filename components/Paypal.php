@@ -99,7 +99,9 @@ class Paypal extends Component
 			)
 		);
 
-		if($this->config['log.LogEnabled'])
+		$this->_apiContext->setConfig($this->config);
+
+		if(isset($this->config['log.FileName'], $this->config['log.LogEnabled']) && $this->config['log.LogEnabled'])
 		{
 			$logFileName = \Yii::getAlias($this->config['log.FileName']);
 
