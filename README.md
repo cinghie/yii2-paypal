@@ -62,13 +62,13 @@ Add in your configuration file, in component section:
 
 ```
 'paypal' => [
-    'class'        => 'cinghie\paypal\components\PayPal',
-    'clientId'     => 'YOUR_CLIENT_ID',
-    'clientSecret' => 'YOUR_CLIENT_SECRET',
-    'isProduction' => false,
-    'config' => [
-    	'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode) 
-    ]
+	'class'        => 'cinghie\paypal\components\PayPal',
+	'clientId'     => 'YOUR_CLIENT_ID',
+	'clientSecret' => 'YOUR_CLIENT_SECRET',
+	'isProduction' => false,
+	'config' => [
+		'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode)
+	]
 ],
 ```
 
