@@ -19,7 +19,7 @@ class m151021_200526_create_paypal_table extends Migration
 	 */
     public function up()
     {
-        $this->createTable('{{%paypal_orders}}', [
+        $this->createTable('{{%payments_paypal}}', [
             'id' => $this->primaryKey(),
             'order_id' => $this->integer(11)->notNull(),
             'user_id' => $this->integer(11)->notNull(),
@@ -35,6 +35,6 @@ class m151021_200526_create_paypal_table extends Migration
 	 */
     public function down()
     {
-        $this->dropTable('{{%paypal_orders}}');
+        $this->dropTable('{{%payments_paypal}}');
     }
 }

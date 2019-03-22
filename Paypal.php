@@ -20,7 +20,7 @@ class Paypal extends Module
 	public $roles = ['admin'];
 
 	// Show Titles in the views
-	public $showTitles = true;
+	public $showTitles = false;
 
 	/**
 	 * @inheritdoc
