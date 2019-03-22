@@ -82,13 +82,23 @@ Add in your configuration file, in component section:
 You can set advanced settings in config array:
 
 ```
-'config' => [  
+'config' => [
 	'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode) 
     'http.ConnectionTimeOut' => 30,
     'http.Retry' => 1,
     'log.LogEnabled' => YII_DEBUG ? 1 : 0,
     'log.FileName' => '@runtime/logs/paypal.log',
     'log.LogLevel' => 'ERROR',
+],
+```
+
+Add in your configuration file, in module section:
+
+```
+'paypal' => [
+    'class' => 'cinghie\paypal\PayPal',
+	'roles' => ['admin'];
+	'showTitles' => false;
 ],
 ```
 
