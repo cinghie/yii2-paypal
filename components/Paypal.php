@@ -13,8 +13,17 @@
 namespace cinghie\paypal\components;
 
 use Yii;
-use PayPal\Rest\ApiContext;
+use PayPal\Api\Address;
+use PayPal\Api\Amount;
+use PayPal\Api\Details;
+use PayPal\Api\CreditCard;
+use PayPal\Api\FundingInstrument;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Exception\PayPalConnectionException;
+use PayPal\Rest\ApiContext;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
@@ -112,5 +121,68 @@ class Paypal extends Component
 		}
 
 		return $this->_apiContext;
+	}
+
+	/**
+	 * Payment Demo
+	 *
+	 * @return Payment
+	 */
+	public function payDemo()
+	{
+		$addr = new Address();
+		$addr->setLine1('52 N Main ST');
+		$addr->setCity('Johnstown');
+		$addr->setCountryCode('US');
+		$addr->setPostalCode('43210');
+		$addr->setState('OH');
+
+		$card = new CreditCard();
+		$card->setNumber('4417119669820331');
+		$card->setType('visa');
+		$card->setExpireMonth('11');
+		$card->setExpireYear('2020');
+		$card->setCvv2('874');
+		$card->setFirstName('Joe');
+		$card->setLastName('Shopper');
+		$card->setBillingAddress($addr);
+
+		$fi = new FundingInstrument();
+		$fi->setCreditCard($card);
+
+		$payer = new Payer();
+		$payer->setPaymentMethod('credit_card');
+		$payer->setFundingInstruments(array($fi));
+
+		$amountDetails = new Details();
+		$amountDetails->setSubtotal('1.00');
+		$amountDetails->setTax('0.22');
+		$amountDetails->setShipping('0.10');
+
+		$amount = new Amount();
+		$amount->setCurrency('EUR');
+		$amount->setTotal('1.32');
+		$amount->setDetails($amountDetails);
+
+		$transaction = new Transaction();
+		$transaction->setAmount($amount);
+		$transaction->setDescription('This is the payment transaction description.');
+
+		$payment = new Payment();
+		$payment->setIntent('sale');
+		$payment->setPayer($payer);
+		$payment->setTransactions(array($transaction));
+
+		try {
+			$paymentDemo = $payment->create($this->_apiContext);
+		} catch (PayPalConnectionException $e) {
+			echo var_dump($e->getCode());
+			echo var_dump($e->getData());
+			die(var_dump($e));
+		} catch (Exception $ex) {
+			die(var_dump($ex));
+		}
+
+		return $paymentDemo;
 	}
 }
