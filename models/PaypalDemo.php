@@ -53,7 +53,7 @@ class PaypalDemo
 	 *
 	 * @return Payment
 	 */
-	public function payCreditCardDemo()
+	public function payByCreditCardDemo()
 	{
 		$addr = new Address();
 		$addr->setLine1('52 N Main ST');
@@ -116,7 +116,7 @@ class PaypalDemo
 	 *
 	 * @return Payment
 	 */
-	public function payPaypalDemo()
+	public function payByPaypalDemo()
 	{
 		$addr = new Address();
 		$addr->setLine1('52 N Main ST');
