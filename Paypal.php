@@ -17,7 +17,7 @@ use yii\i18n\PhpMessageSource;
 class Paypal extends Module
 {
 	// Admin Rules
-	public $roles = ['admin'];
+	public $paypalRoles = ['admin'];
 
 	// Show Titles in the views
 	public $showTitles = false;
