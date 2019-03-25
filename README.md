@@ -98,7 +98,7 @@ Add in your configuration file, in module section:
 ```
 'paypal' => [
 	'class' => 'cinghie\paypal\Paypal',
-	'roles' => ['admin'],
+	'paypalRoles' => ['admin'],
 	'showTitles' => false,
 ],
 ```
@@ -115,4 +115,12 @@ $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-paypal/migrations
 
 ```
 \Yii::$app->paypal;
+```
+
+## Use Demo (Only in Sandbox mode)
+
+```
+$demo = new \cinghie\paypal\models\PaypalDemo();
+$demo->payCreditCardDemo();
+$demo->payPaypalDemo();
 ```
