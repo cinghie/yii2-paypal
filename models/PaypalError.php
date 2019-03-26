@@ -14,7 +14,6 @@ namespace cinghie\paypal\models;
 
 use Yii;
 use PayPal\Exception\PayPalConnectionException;
-use yii\base\Object;
 
 /**
  * Class PaypalError
@@ -57,12 +56,12 @@ class PaypalError
 		$this->data    = json_decode($this->error->getData());
 		$this->debugID = $this->data->debug_id;
 		$this->details = $this->data->details;
-		$this->link    = $this->data->information_link;
+		$this->link    = str_replace('errors','error',$this->data->information_link).'-'.$this->data->name;
 		$this->message = $this->data->message;
 		$this->name    = $this->data->name;
 
 		if(Yii::$app->paypal->checkIsSandbox()) {
-			$this->setAlertError();
+			$this->setSandboxAlertError();
 		} else {
 			$this->setAlertError();
 		}
@@ -88,8 +87,7 @@ class PaypalError
 	public function setSandboxAlertError()
 	{
 		$alert = 'CODE '.$this->code.' - ';
-		$alert .= 'PAYPAL ';
-		$alert .= str_replace('_',' ',$this->name);
+		$alert .= 'PAYPAL '.$this->name;
 		$alert .= ' (DEBUG ID: '.$this->debugID.') ';
 		$alert .= $this->message.'<br>';
 
@@ -97,7 +95,7 @@ class PaypalError
 			$alert .= ' - '.$detail->issue.' => '.$detail->field.'<br>';
 		}
 
-		$alert .= $this->link.'<br>';
+		$alert .= '<a href="'.$this->link.'" target="_blanck">'.$this->link.'</a><br>';
 
 		Yii::$app->session->setFlash('error', $alert);
 	}
