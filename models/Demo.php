@@ -118,7 +118,7 @@ class Demo
 	 *
 	 * @return Payment
 	 */
-	public function payByDemo()
+	public function payByPaypalDemo()
 	{
 		$addr = new Address();
 		$addr->setLine1('52 N Main ST');

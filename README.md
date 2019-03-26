@@ -123,5 +123,5 @@ $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-paypal/migrations
 ```
 $demo = new \cinghie\paypal\models\Demo();
 $demo->payByCreditCardDemo();
-$demo->payByDemo();
+$demo->payByPaypalDemo();
 ```
