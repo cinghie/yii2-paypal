@@ -12,7 +12,7 @@
 
 use cinghie\traits\migrations\Migration;
 
-class m151021_201526_create_paypal_table extends \yii\db\Migration
+class m151021_201526_create_paypal_table extends Migration
 {
 	/**
 	 * @inheritdoc
@@ -22,7 +22,7 @@ class m151021_201526_create_paypal_table extends \yii\db\Migration
         $this->createTable('{{%payments_paypal}}', [
             'id' => $this->primaryKey(),
             'order_id' => $this->integer(11)->notNull(),
-            'user_id' => $this->integer(11)->notNull(),
+            'user_id' => $this->integer(11)->defaultValue(null),
             'payment_id' => $this->string(64)->notNull(),
             'state' => $this->string(24)->notNull(),
             'description' => $this->string(255)->defaultValue(''),
