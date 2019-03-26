@@ -16,9 +16,9 @@ use Yii;
 use PayPal\Exception\PayPalConnectionException;
 
 /**
- * Class PaypalError
+ * Class Error
  */
-class PaypalError
+class Error
 {
 	/** @var string */
 	public $code;
@@ -45,7 +45,7 @@ class PaypalError
 	public $name;
 
 	/**
-	 * PaypalError constructor
+	 * Error constructor
 	 *
 	 * @param PayPalConnectionException $e
 	 */

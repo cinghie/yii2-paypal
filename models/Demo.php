@@ -27,15 +27,15 @@ use PayPal\Exception\PayPalConnectionException;
 use yii\base\ErrorException;
 
 /**
- * Class PaypalDemo
+ * Class Demo
  */
-class PaypalDemo
+class Demo
 {
 	/** @var ApiContext $_apiContext */
 	private $_apiContext;
 
 	/**
-	 * PaypalDemo constructor.
+	 * Demo constructor.
 	 *
 	 * @throws ErrorException
 	 */
@@ -103,7 +103,7 @@ class PaypalDemo
 		try {
 			$paymentDemo = $payment->create($this->_apiContext);
 		} catch (PayPalConnectionException $e) {
-			new PaypalError($e);
+			new Error($e);
 		} catch (Exception $ex) {
 			die(var_dump($ex));
 		}
@@ -118,7 +118,7 @@ class PaypalDemo
 	 *
 	 * @return Payment
 	 */
-	public function payByPaypalDemo()
+	public function payByDemo()
 	{
 		$addr = new Address();
 		$addr->setLine1('52 N Main ST');
@@ -161,7 +161,7 @@ class PaypalDemo
 			$approvalUrl = $paymentDemo->getApprovalLink();
 			echo	'<a href="'.$approvalUrl.'">Paga con PayPal</a>';
 		} catch (PayPalConnectionException $e) {
-			new PaypalError($e);
+			new Error($e);
 		} catch (Exception $ex) {
 			die(var_dump($ex));
 		}
