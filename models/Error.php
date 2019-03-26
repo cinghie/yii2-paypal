@@ -92,7 +92,7 @@ class Error
 		$alert .= $this->message.'<br>';
 
 		foreach($this->details as $detail) {
-			$alert .= ' - '.$detail->issue.' => '.$detail->field.'<br>';
+			$alert .= $detail->issue.' => '.$detail->field.'<br>';
 		}
 
 		$alert .= '<a href="'.$this->link.'" target="_blanck">'.$this->link.'</a><br>';

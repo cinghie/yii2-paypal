@@ -13,6 +13,7 @@
 namespace cinghie\paypal\models;
 
 use Yii;
+use cinghie\paypal\models\Payments;
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -66,7 +67,7 @@ class Demo
 		$card->setNumber('4417119669820331');
 		$card->setType('visa');
 		$card->setExpireMonth('11');
-		$card->setExpireYear('2010');
+		$card->setExpireYear('2030');
 		$card->setCvv2('874');
 		$card->setFirstName('Joe');
 		$card->setLastName('Shopper');
@@ -108,7 +109,7 @@ class Demo
 			die(var_dump($ex));
 		}
 
-		echo '<pre>'; var_dump($paymentDemo); echo '</pre>';
+		Payments::createPayments($paymentDemo);
 
 		return $paymentDemo;
 	}

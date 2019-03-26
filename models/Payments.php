@@ -13,6 +13,10 @@
 namespace cinghie\paypal\models;
 
 use Yii;
+use cinghie\traits\CreatedTrait;
+use cinghie\traits\UserHelpersTrait;
+use cinghie\traits\UserTrait;
+use PayPal\Api\Payment;
 use yii\db\ActiveRecord;
 
 /**
@@ -25,9 +29,12 @@ use yii\db\ActiveRecord;
  * @property string $state
  * @property string $description
  * @property string $created
+ * @property int $created_by
  */
 class Payments extends ActiveRecord
 {
+	use CreatedTrait, UserHelpersTrait, UserTrait;
+
     /**
      * @inheritdoc
      */
@@ -41,14 +48,13 @@ class Payments extends ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['order_id', 'user_id', 'payment_id', 'state'], 'required'],
-            [['order_id', 'user_id'], 'integer'],
-            [['created'], 'safe'],
+	    return array_merge(CreatedTrait::rules(), UserTrait::rules(), [
+            [['order_id', 'payment_id', 'state'], 'required'],
+            [['order_id'], 'integer'],
             [['payment_id'], 'string', 'max' => 64],
             [['state'], 'string', 'max' => 24],
             [['description'], 'string', 'max' => 255],
-        ];
+        ]);
     }
 
     /**
@@ -56,15 +62,32 @@ class Payments extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        return array_merge(CreatedTrait::attributeLabels(), UserTrait::attributeLabels(), [
             'id' => Yii::t('traits', 'ID'),
             'order_id' => Yii::t('traits', 'Order ID'),
-            'user_id' => Yii::t('traits', 'User Id'),
             'payment_id' => Yii::t('traits', 'Payment ID'),
             'state' => Yii::t('traits', 'State'),
             'description' => Yii::t('traits', 'Description'),
-            'created' => Yii::t('traits', 'Created'),
-        ];
+        ]);
+    }
+
+	/**
+	 * Create Payments DB from Paypal Paymen
+	 *
+	 * @param Payment $payment
+	 */
+	public static function createPayments($payment)
+    {
+    	$payments = new self();
+    	$payments->order_id = 1;
+    	$payments->userd_id = $payments->getCurrentUser();
+	    $payments->payment_id = $payment->getId();
+    	$payments->state = $payment->getState();
+    	$payments->created = $payment->getCreateTime();
+    	$payments->created_by = $payments->getCurrentUser();
+    	$payments->save();
+
+    	echo '<pre>'; var_dump($payment); echo '</pre>';
     }
 
     /**
