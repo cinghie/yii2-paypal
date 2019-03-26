@@ -13,37 +13,74 @@
 namespace cinghie\paypal\models;
 
 use Yii;
-use yii\helpers\Json;
+use PayPal\Exception\PayPalConnectionException;
+use yii\base\Object;
 
 /**
  * Class PaypalError
  */
 class PaypalError
 {
-	/** @var JSON */
-	public $data;
+	/** @var string */
+	public $code;
 
 	/** @var string */
+	public $debugID;
+
+	/** @var Object */
+	public $data;
+
+	/** @var array */
+	public $details;
+
+	/** @var PayPalConnectionException */
 	public $error;
+
+	/** @var string */
+	public $link;
+
+	/** @var string */
+	public $message;
+
+	/** @var string */
+	public $name;
 
 	/**
 	 * PaypalError constructor
 	 *
-	 * @param array | Json $data
+	 * @param PayPalConnectionException $e
 	 */
-	public function __construct($data = [])
+	public function __construct($e)
 	{
-		if($data) {
-			$this->data = json_decode($data);
+		$this->error   = $e;
+		$this->code    = $this->error->getCode();
+		$this->data    = json_decode($this->error->getData());
+		$this->debugID = $this->data->debug_id;
+		$this->details = $this->data->details;
+		$this->link    = $this->data->information_link;
+		$this->message = $this->data->message;
+		$this->name    = $this->data->name;
+
+		$this->setAlertError();
+	}
+
+	/**
+	 * Set PayPalConnectionException Alert
+	 *
+	 * @return void
+	 */
+	public function setAlertError()
+	{
+		$alert = 'CODE '.$this->code.' - ';
+		$alert .= 'PAYPAL ';
+		$alert .= str_replace('_',' ',$this->name);
+		$alert .= ' (DEBUG ID: '.$this->debugID.') ';
+		$alert .= $this->message.'<br>';
+
+		foreach($this->details as $detail) {
+			$alert .= ' - '.$detail->issue.' => '.$detail->field.'<br>';
 		}
 
-		$this->error = 'PAYPAL ';
-		$this->error .= str_replace('_',' ',$this->data->name).': '.$this->data->message.' Degub ID: '.$this->data->debug_id.'<br>';
-
-		foreach($this->data->details as $detail) {
-			$this->error .= ' - '.$detail->issue.' => '.$detail->field.'<br>';
-		}
-
-		Yii::$app->session->setFlash('error', $this->error);
+		Yii::$app->session->setFlash('error', $alert);
 	}
 }

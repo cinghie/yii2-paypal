@@ -103,7 +103,7 @@ class PaypalDemo
 		try {
 			$paymentDemo = $payment->create($this->_apiContext);
 		} catch (PayPalConnectionException $e) {
-			new PaypalError($e->getData());
+			new PaypalError($e);
 		} catch (Exception $ex) {
 			die(var_dump($ex));
 		}
@@ -156,7 +156,7 @@ class PaypalDemo
 			$approvalUrl = $paymentDemo->getApprovalLink();
 			echo	'<a href="'.$approvalUrl.'">Paga con PayPal</a>';
 		} catch (PayPalConnectionException $e) {
-			new PaypalError($e->getData());
+			new PaypalError($e);
 		} catch (Exception $ex) {
 			die(var_dump($ex));
 		}
