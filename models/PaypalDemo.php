@@ -108,6 +108,8 @@ class PaypalDemo
 			die(var_dump($ex));
 		}
 
+		echo '<pre>'; var_dump($paymentDemo); echo '</pre>';
+
 		return $paymentDemo;
 	}
 
@@ -136,6 +138,7 @@ class PaypalDemo
 		$amountDetails->setSubtotal('1.00');
 		$amountDetails->setTax('0.22');
 		$amountDetails->setShipping('0.10');
+
 		$amount = new Amount();
 		$amount->setCurrency('EUR');
 		$amount->setTotal('1.32');
@@ -150,6 +153,8 @@ class PaypalDemo
 		$payment->setPayer($payer);
 		$payment->setRedirectUrls($redirectUrls);
 		$payment->setTransactions(array($transaction));
+
+		$paymentDemo = new Payment();
 
 		try {
 			$paymentDemo = $payment->create($this->_apiContext);

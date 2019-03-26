@@ -61,15 +61,31 @@ class PaypalError
 		$this->message = $this->data->message;
 		$this->name    = $this->data->name;
 
-		$this->setAlertError();
+		if(Yii::$app->paypal->checkIsSandbox()) {
+			$this->setAlertError();
+		} else {
+			$this->setAlertError();
+		}
 	}
 
 	/**
-	 * Set PayPalConnectionException Alert
+	 * Set Sandbox PayPalConnectionException Alert
 	 *
 	 * @return void
 	 */
 	public function setAlertError()
+	{
+		$alert = Yii::t('traits','Error').' '.$this->code;
+
+		Yii::$app->session->setFlash('error', $alert);
+	}
+
+	/**
+	 * Set Sandbox PayPalConnectionException Alert
+	 *
+	 * @return void
+	 */
+	public function setSandboxAlertError()
 	{
 		$alert = 'CODE '.$this->code.' - ';
 		$alert .= 'PAYPAL ';
@@ -80,6 +96,8 @@ class PaypalError
 		foreach($this->details as $detail) {
 			$alert .= ' - '.$detail->issue.' => '.$detail->field.'<br>';
 		}
+
+		$alert .= $this->link.'<br>';
 
 		Yii::$app->session->setFlash('error', $alert);
 	}
