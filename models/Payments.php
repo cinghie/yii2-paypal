@@ -25,11 +25,20 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $order_id
  * @property int $user_id
+ * @property string $transaction_id
  * @property string $payment_id
- * @property string $state
+ * @property string $client_token
+ * @property string $payment_method
+ * @property string $currency
+ * @property double $total_paid
+ * @property string $payment_state
+ * @property string $method
  * @property string $description
- * @property string $created
  * @property int $created_by
+ * @property string $created
+ *
+ * @property User $createdBy
+ * @property User $user
  */
 class Payments extends ActiveRecord
 {
@@ -49,11 +58,12 @@ class Payments extends ActiveRecord
     public function rules()
     {
 	    return array_merge(CreatedTrait::rules(), UserTrait::rules(), [
-            [['order_id', 'payment_id', 'state'], 'required'],
-            [['order_id'], 'integer'],
-            [['payment_id'], 'string', 'max' => 64],
-            [['state'], 'string', 'max' => 24],
-            [['description'], 'string', 'max' => 255],
+		    [['order_id'], 'integer'],
+		    [['total_paid'], 'number'],
+		    [['transaction_id', 'payment_id'], 'string', 'max' => 55],
+		    [['client_token', 'payment_method', 'method', 'description'], 'string', 'max' => 255],
+		    [['currency'], 'string', 'max' => 21],
+		    [['payment_state'], 'string', 'max' => 24],
         ]);
     }
 
@@ -63,11 +73,20 @@ class Payments extends ActiveRecord
     public function attributeLabels()
     {
         return array_merge(CreatedTrait::attributeLabels(), UserTrait::attributeLabels(), [
-            'id' => Yii::t('traits', 'ID'),
-            'order_id' => Yii::t('traits', 'Order ID'),
-            'payment_id' => Yii::t('traits', 'Payment ID'),
-            'state' => Yii::t('traits', 'State'),
-            'description' => Yii::t('traits', 'Description'),
+	        'id' => Yii::t('traits', 'ID'),
+	        'order_id' => Yii::t('traits', 'Order ID'),
+	        'user_id' => Yii::t('traits', 'User Id'),
+	        'transaction_id' => Yii::t('traits', 'Transaction ID'),
+	        'payment_id' => Yii::t('traits', 'Payment ID'),
+	        'client_token' => Yii::t('traits', 'Client Token'),
+	        'payment_method' => Yii::t('traits', 'Payment Method'),
+	        'currency' => Yii::t('traits', 'Currency'),
+	        'total_paid' => Yii::t('traits', 'Total Paid'),
+	        'payment_state' => Yii::t('traits', 'Payment State'),
+	        'method' => Yii::t('traits', 'Method'),
+	        'description' => Yii::t('traits', 'Description'),
+	        'created_by' => Yii::t('traits', 'Created By'),
+	        'created' => Yii::t('traits', 'Created'),
         ]);
     }
 
@@ -82,7 +101,7 @@ class Payments extends ActiveRecord
     	$payments->order_id = 1;
     	$payments->user_id = $payments->getCurrentUser()->id;
 	    $payments->payment_id = $payment->getId();
-    	$payments->state = $payment->getState();
+    	$payments->payment_state = $payment->getState();
     	$payments->created = date('Y-m-d H:m:s', strtotime($payment->getCreateTime()));
     	$payments->created_by = $payments->getCurrentUser()->id;
     	$payments->save();
