@@ -80,12 +80,14 @@ class Payments extends ActiveRecord
     {
     	$payments = new self();
     	$payments->order_id = 1;
-    	$payments->userd_id = $payments->getCurrentUser();
+    	$payments->user_id = $payments->getCurrentUser()->id;
 	    $payments->payment_id = $payment->getId();
     	$payments->state = $payment->getState();
-    	$payments->created = $payment->getCreateTime();
-    	$payments->created_by = $payments->getCurrentUser();
+    	$payments->created = date('Y-m-d H:m:s', strtotime($payment->getCreateTime()));
+    	$payments->created_by = $payments->getCurrentUser()->id;
     	$payments->save();
+
+	    echo '<pre>'; var_dump($payments->errors); echo '</pre>';
 
     	echo '<pre>'; var_dump($payment); echo '</pre>';
     }
