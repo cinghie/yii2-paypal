@@ -10,6 +10,9 @@
  * @version 0.2.2
  */
 
+namespace cinghie\paypal;
+
+use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Module;
 use yii\i18n\PhpMessageSource;
