@@ -13,6 +13,7 @@
 namespace cinghie\paypal\models;
 
 use Yii;
+use PayPal\Api\Transaction;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,6 +21,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $transaction_id
+ * @property string $payment_id
  * @property string $currency
  * @property double $subtotal
  * @property double $tax
@@ -44,7 +46,7 @@ class Transactions extends ActiveRecord
     {
         return [
             [['subtotal', 'tax', 'shipping', 'total_paid'], 'number'],
-            [['transaction_id'], 'string', 'max' => 55],
+            [['payment_id','transaction_id'], 'string', 'max' => 55],
             [['currency'], 'string', 'max' => 21],
             [['description'], 'string', 'max' => 255],
         ];
@@ -57,6 +59,7 @@ class Transactions extends ActiveRecord
     {
         return [
             'id' => Yii::t('traits', 'ID'),
+            'payment_id' => Yii::t('traits', 'Payment ID'),
             'transaction_id' => Yii::t('traits', 'Transaction ID'),
             'currency' => Yii::t('traits', 'Currency'),
             'subtotal' => Yii::t('traits', 'Subtotal'),
@@ -66,6 +69,63 @@ class Transactions extends ActiveRecord
             'description' => Yii::t('traits', 'Description'),
         ];
     }
+
+	/**
+	 * Create Transactions
+	 *
+	 * @param string $paymentID
+	 * @param Transaction[] $transactions
+	 */
+	public static function createTransactions($paymentID,$transactions)
+	{
+		foreach ($transactions as $transaction)
+		{
+			$newTransactions = new self();
+			$newTransactions->transaction_id = $newTransactions->getTransactionID($transaction);
+			$newTransactions->payment_id = $paymentID;
+			$newTransactions->currency = $transaction->getAmount()->getCurrency();
+			$newTransactions->subtotal = $transaction->getAmount()->getDetails()->getSubtotal();
+			$newTransactions->tax = $transaction->getAmount()->getDetails()->getTax();
+			$newTransactions->shipping = $transaction->getAmount()->getDetails()->getShipping();
+			$newTransactions->total_paid = (float)$transaction->getAmount()->getTotal();
+			$newTransactions->description = $transaction->getDescription();
+			$newTransactions->save();
+		}
+	}
+
+	/**
+	 * Get Transaction ID
+	 *
+	 * @param Transaction $transaction
+	 *
+	 * @return string
+	 */
+	public function getTransactionID($transaction)
+    {
+	    $relatedResources = $transaction->getRelatedResources();
+	    $sale = $relatedResources[0]->getSale();
+
+	    return $sale->getId();
+    }
+
+	/**
+	 * Get Total Paid by Transaction[]
+	 *
+	 * @param Transaction[] $transactions
+	 *
+	 * @return float
+	 */
+	public static function getTransactionTotal($transactions)
+	{
+		$total = 0;
+
+		foreach ($transactions as $transaction)
+		{
+			$total += (float)$transaction->getAmount()->getTotal();
+		}
+
+		return $total;
+	}
 
     /**
      * @inheritdoc

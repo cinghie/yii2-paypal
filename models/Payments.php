@@ -94,12 +94,13 @@ class Payments extends ActiveRecord
 
     	$currentUser    = $payments->getCurrentUser()->id;
     	$orderID        = 1;
-    	$paymentAmount  = $payments->getTotalPaid($payment->getTransactions());
+    	$paymentAmount  = Transactions::getTransactionTotal($payment->getTransactions());
     	$paymentCreated = $payments->convertDateToDateTime($payment->getCreateTime());
     	$paymentID      = $payment->getId();
     	$paymentMethod  = $payment->getPayer()->getPaymentMethod();
     	$paymentState   = $payment->getState();
 
+    	// Create Payments
 	    $payments->created = $paymentCreated;
 	    $payments->created_by = $currentUser;
     	$payments->order_id = $orderID;
@@ -110,28 +111,11 @@ class Payments extends ActiveRecord
 	    $payments->user_id = $currentUser;
     	$payments->save();
 
+	    // Create Transactions
+	    Transactions::createTransactions($paymentID,$payment->getTransactions());
+
 	    echo '<pre>'; var_dump($payments->errors); echo '</pre>';
     	echo '<pre>'; var_dump($payment); echo '</pre>';
-    }
-
-	/**
-	 * Get Total Paid by Transaction[]
-	 *
-	 * @param $transactions
-	 *
-	 * @return float
-	 */
-	public function getTotalPaid($transactions)
-    {
-    	$total = 0;
-
-		foreach ($transactions as $transaction)
-		{
-			/** @var Transaction $transaction */
-			$total += $transaction->getAmount();
-		}
-
-		return (float)$total;
     }
 
 	/**
