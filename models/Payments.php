@@ -17,6 +17,7 @@ use cinghie\traits\CreatedTrait;
 use cinghie\traits\UserHelpersTrait;
 use cinghie\traits\UserTrait;
 use PayPal\Api\Payment;
+use PayPal\Api\Transaction;
 use yii\db\ActiveRecord;
 
 /**
@@ -25,15 +26,12 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $order_id
  * @property int $user_id
- * @property string $transaction_id
  * @property string $payment_id
  * @property string $client_token
  * @property string $payment_method
  * @property string $currency
  * @property double $total_paid
  * @property string $payment_state
- * @property string $method
- * @property string $description
  * @property int $created_by
  * @property string $created
  *
@@ -58,11 +56,11 @@ class Payments extends ActiveRecord
     public function rules()
     {
 	    return array_merge(CreatedTrait::rules(), UserTrait::rules(), [
+		    [['payment_id'], 'required'],
 		    [['order_id'], 'integer'],
 		    [['total_paid'], 'number'],
-		    [['transaction_id', 'payment_id'], 'string', 'max' => 55],
-		    [['client_token', 'payment_method', 'method', 'description'], 'string', 'max' => 255],
-		    [['currency'], 'string', 'max' => 21],
+		    [['payment_id'], 'string', 'max' => 55],
+		    [['client_token', 'payment_method'], 'string', 'max' => 255],
 		    [['payment_state'], 'string', 'max' => 24],
         ]);
     }
@@ -75,16 +73,11 @@ class Payments extends ActiveRecord
         return array_merge(CreatedTrait::attributeLabels(), UserTrait::attributeLabels(), [
 	        'id' => Yii::t('traits', 'ID'),
 	        'order_id' => Yii::t('traits', 'Order ID'),
-	        'user_id' => Yii::t('traits', 'User Id'),
-	        'transaction_id' => Yii::t('traits', 'Transaction ID'),
 	        'payment_id' => Yii::t('traits', 'Payment ID'),
 	        'client_token' => Yii::t('traits', 'Client Token'),
 	        'payment_method' => Yii::t('traits', 'Payment Method'),
-	        'currency' => Yii::t('traits', 'Currency'),
 	        'total_paid' => Yii::t('traits', 'Total Paid'),
 	        'payment_state' => Yii::t('traits', 'Payment State'),
-	        'method' => Yii::t('traits', 'Method'),
-	        'description' => Yii::t('traits', 'Description'),
 	        'created_by' => Yii::t('traits', 'Created By'),
 	        'created' => Yii::t('traits', 'Created'),
         ]);
@@ -98,17 +91,59 @@ class Payments extends ActiveRecord
 	public static function createPayments($payment)
     {
     	$payments = new self();
-    	$payments->order_id = 1;
-    	$payments->user_id = $payments->getCurrentUser()->id;
-	    $payments->payment_id = $payment->getId();
-    	$payments->payment_state = $payment->getState();
-    	$payments->created = date('Y-m-d H:m:s', strtotime($payment->getCreateTime()));
-    	$payments->created_by = $payments->getCurrentUser()->id;
+
+    	$currentUser    = $payments->getCurrentUser()->id;
+    	$orderID        = 1;
+    	$paymentAmount  = $payments->getTotalPaid($payment->getTransactions());
+    	$paymentCreated = $payments->convertDateToDateTime($payment->getCreateTime());
+    	$paymentID      = $payment->getId();
+    	$paymentMethod  = $payment->getPayer()->getPaymentMethod();
+    	$paymentState   = $payment->getState();
+
+	    $payments->created = $paymentCreated;
+	    $payments->created_by = $currentUser;
+    	$payments->order_id = $orderID;
+	    $payments->payment_id = $paymentID;
+	    $payments->payment_method = $paymentMethod;
+    	$payments->payment_state = $paymentState;
+	    $payments->total_paid = $paymentAmount;
+	    $payments->user_id = $currentUser;
     	$payments->save();
 
 	    echo '<pre>'; var_dump($payments->errors); echo '</pre>';
-
     	echo '<pre>'; var_dump($payment); echo '</pre>';
+    }
+
+	/**
+	 * Get Total Paid by Transaction[]
+	 *
+	 * @param $transactions
+	 *
+	 * @return float
+	 */
+	public function getTotalPaid($transactions)
+    {
+    	$total = 0;
+
+		foreach ($transactions as $transaction)
+		{
+			/** @var Transaction $transaction */
+			$total += $transaction->getAmount();
+		}
+
+		return (float)$total;
+    }
+
+	/**
+	 * Convert Paypal Date in DateTime format
+	 *
+	 * @param $date
+	 *
+	 * @return false|string
+	 */
+	public function convertDateToDateTime($date)
+    {
+    	return date('Y-m-d H:m:s', strtotime($date));
     }
 
     /**

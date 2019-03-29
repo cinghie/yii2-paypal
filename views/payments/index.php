@@ -1,39 +1,71 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel cinghie\paypal\models\PaymentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+use kartik\grid\CheckboxColumn;
+use kartik\grid\GridView;
+use kartik\helpers\Html;
+use yii\helpers\Url;
+
 $this->title = Yii::t('paypal', 'Payments');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
 <div class="payments-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+	<?php if(Yii::$app->getModule('articles')->showTitles): ?>
+        <div class="page-header">
+            <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+	<?php endif ?>
 
-    <p>
-        <?= Html::a(Yii::t('paypal', 'Create Payments'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+	<?= GridView::widget([
+		'dataProvider'=> $dataProvider,
+		'filterModel' => $searchModel,
+		'containerOptions' => [
+			'class' => 'articles-items-pjax-container'
+		],
+		'pjax' => true,
+		'pjaxSettings'=>[
+			'neverTimeout' => true,
+		],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'order_id',
-            'user_id',
-            'transaction_id',
-            'payment_id',
+	        [
+		        'class' => CheckboxColumn::class
+	        ],
+            [
+	            'attribute' => 'transaction_id',
+            ],
+	        [
+		        'attribute' => 'payment_id',
+	        ],
+	        [
+		        'attribute' => 'payment_method',
+            ],
+	        [
+		        'attribute' => 'created_by',
+		        'filterType' => GridView::FILTER_SELECT2,
+		        'filter' => $searchModel->getUsersSelect2(),
+		        'filterWidgetOptions' => [
+			        'pluginOptions' => ['allowClear' => true],
+		        ],
+		        'filterInputOptions' => ['placeholder' => ''],
+		        'format' => 'raw',
+		        'hAlign' => 'center',
+		        'width' => '8%',
+		        'value' => function ($model) {
+			        /** @var $model cinghie\articles\models\Items */
+			        return $model->getCreatedByGridView();
+		        }
+	        ],
+	        [
+		        'attribute' => 'created',
+		        'hAlign' => 'center',
+	        ],
             //'client_token',
-            //'payment_method',
             //'currency',
             //'total_paid',
             //'payment_state',
@@ -41,11 +73,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //'description',
             //'created_by',
             //'created',
-
-            ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
-
-    <?php Pjax::end(); ?>
+		'responsive' => true,
+		'responsiveWrap' => true,
+		'hover' => true,
+		'panel' => [
+			'heading' => '<h3 class="panel-title"><i class="fa fa-paypal"></i></h3>',
+			'type' => 'success',
+		],
+    ]) ?>
 
 </div>
