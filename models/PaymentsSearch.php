@@ -18,7 +18,7 @@ class PaymentsSearch extends Payments
     {
         return [
             [['id', 'order_id', 'user_id', 'created_by'], 'integer'],
-            [['transaction_id', 'payment_id', 'client_token', 'payment_method', 'currency', 'payment_state', 'method', 'description', 'created'], 'safe'],
+            [['payment_id', 'client_token', 'payment_method', 'payment_state', 'created'], 'safe'],
             [['total_paid'], 'number'],
         ];
     }
@@ -42,12 +42,16 @@ class PaymentsSearch extends Payments
     public function search($params)
     {
         $query = Payments::find();
+	    $query->joinWith('createdBy');
 
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+	    $dataProvider = new ActiveDataProvider([
+		    'query' => $query,
+		    'sort' => [
+			    'defaultOrder' => [
+				    'created' => SORT_DESC
+			    ],
+		    ],
+	    ]);
 
         $this->load($params);
 
@@ -67,14 +71,10 @@ class PaymentsSearch extends Payments
             'created' => $this->created,
         ]);
 
-        $query->andFilterWhere(['like', 'transaction_id', $this->transaction_id])
-            ->andFilterWhere(['like', 'payment_id', $this->payment_id])
+        $query->andFilterWhere(['like', 'payment_id', $this->payment_id])
             ->andFilterWhere(['like', 'client_token', $this->client_token])
             ->andFilterWhere(['like', 'payment_method', $this->payment_method])
-            ->andFilterWhere(['like', 'currency', $this->currency])
-            ->andFilterWhere(['like', 'payment_state', $this->payment_state])
-            ->andFilterWhere(['like', 'method', $this->method])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'payment_state', $this->payment_state]);
 
         return $dataProvider;
     }

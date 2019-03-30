@@ -20,6 +20,8 @@ use yii\base\InvalidConfigException;
 
 /**
  * Class Paypal
+ *
+ * @property ApiContext $apiContext
  */
 class Paypal extends Component
 {

@@ -17,7 +17,6 @@ use cinghie\traits\CreatedTrait;
 use cinghie\traits\UserHelpersTrait;
 use cinghie\traits\UserTrait;
 use PayPal\Api\Payment;
-use PayPal\Api\Transaction;
 use yii\db\ActiveRecord;
 
 /**

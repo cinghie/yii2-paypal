@@ -36,15 +36,25 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 		        'class' => CheckboxColumn::class
 	        ],
-            [
-	            'attribute' => 'transaction_id',
-            ],
 	        [
 		        'attribute' => 'payment_id',
+		        'hAlign' => 'center',
 	        ],
 	        [
 		        'attribute' => 'payment_method',
+		        'hAlign' => 'center',
+		        'width' => '12%',
             ],
+	        [
+		        'attribute' => 'payment_state',
+		        'hAlign' => 'center',
+		        'width' => '8%',
+	        ],
+	        [
+		        'attribute' => 'total_paid',
+		        'hAlign' => 'center',
+		        'width' => '8%',
+	        ],
 	        [
 		        'attribute' => 'created_by',
 		        'filterType' => GridView::FILTER_SELECT2,
@@ -64,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 		        'attribute' => 'created',
 		        'hAlign' => 'center',
+		        'width' => '12%',
 	        ],
             //'client_token',
             //'currency',

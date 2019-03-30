@@ -2,6 +2,7 @@
 
 namespace cinghie\paypal\controllers;
 
+use RuntimeException;
 use Throwable;
 use Yii;
 use cinghie\paypal\models\Payments;
@@ -9,6 +10,7 @@ use cinghie\paypal\models\PaymentsSearch;
 use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -22,6 +24,19 @@ class PaymentsController extends Controller
     public function behaviors()
     {
         return [
+	        'access' => [
+		        'class' => AccessControl::class,
+		        'rules' => [
+			        [
+				        'allow' => true,
+				        'actions' => ['index','view','delete'],
+				        'roles' => $this->module->paypalRoles
+			        ],
+		        ],
+		        'denyCallback' => static function () {
+			        throw new RuntimeException(Yii::t('traits','You are not allowed to access this page'));
+		        }
+	        ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
