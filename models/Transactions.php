@@ -84,10 +84,10 @@ class Transactions extends ActiveRecord
 			$newTransactions->transaction_id = $newTransactions->getTransactionID($transaction);
 			$newTransactions->payment_id = $paymentID;
 			$newTransactions->currency = $transaction->getAmount()->getCurrency();
-			$newTransactions->subtotal = $transaction->getAmount()->getDetails()->getSubtotal();
-			$newTransactions->tax = $transaction->getAmount()->getDetails()->getTax();
-			$newTransactions->shipping = $transaction->getAmount()->getDetails()->getShipping();
-			$newTransactions->total_paid = (float)$transaction->getAmount()->getTotal();
+			$newTransactions->subtotal = number_format((float)$transaction->getAmount()->getDetails()->getSubtotal(),2);
+			$newTransactions->tax = number_format((float)$transaction->getAmount()->getDetails()->getTax(),2);
+			$newTransactions->shipping = number_format((float)$transaction->getAmount()->getDetails()->getShipping(),2);
+			$newTransactions->total_paid =  number_format((float)$transaction->getAmount()->getTotal(),2);
 			$newTransactions->description = $transaction->getDescription();
 			$newTransactions->save();
 		}

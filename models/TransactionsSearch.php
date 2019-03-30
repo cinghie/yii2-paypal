@@ -41,14 +41,15 @@ class TransactionsSearch extends Transactions
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params)
+	/**
+	 * Creates data provider instance with search query applied
+	 *
+	 * @param array $params
+	 * @param string $payment_id
+	 *
+	 * @return ActiveDataProvider
+	 */
+    public function search($params,$payment_id = '')
     {
         $query = Transactions::find();
 
@@ -64,6 +65,10 @@ class TransactionsSearch extends Transactions
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+
+        if($payment_id) {
+        	$this->payment_id = $payment_id;
         }
 
         // grid filtering conditions

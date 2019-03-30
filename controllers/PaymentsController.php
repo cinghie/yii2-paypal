@@ -1,13 +1,23 @@
 <?php
 
+/**
+ * @copyright Copyright &copy; Gogodigital Srls
+ * @company Gogodigital Srls - Wide ICT Solutions
+ * @website http://www.gogodigital.it
+ * @github https://github.com/cinghie/yii2-paypal
+ * @license BSD-3-Clause
+ * @package yii2-paypal
+ * @version 0.2.2
+ */
+
 namespace cinghie\paypal\controllers;
 
-use cinghie\paypal\models\TransactionsSearch;
 use RuntimeException;
 use Throwable;
 use Yii;
 use cinghie\paypal\models\Payments;
 use cinghie\paypal\models\PaymentsSearch;
+use cinghie\paypal\models\TransactionsSearch;
 use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -49,6 +59,7 @@ class PaymentsController extends Controller
 
     /**
      * Lists all Payments models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -64,19 +75,22 @@ class PaymentsController extends Controller
 
     /**
      * Displays a single Payments model.
+     *
      * @param integer $id
+     *
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+    	$model = $this->findModel($id);
 	    $searchModel = new TransactionsSearch();
-	    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+	    $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$model->payment_id);
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-	        'dataProvider' => $dataProvider
-        ]);
+	    return $this->render('view', [
+		    'model' => $model,
+		    'dataProvider' => $dataProvider
+	    ]);
     }
 
 	/**
