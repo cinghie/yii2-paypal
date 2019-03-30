@@ -14,12 +14,11 @@ namespace cinghie\paypal\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use cinghie\paypal\models\Payments;
 
 /**
- * PaymentsSearch represents the model behind the search form of `cinghie\paypal\models\Payments`.
+ * TransactionsSearch represents the model behind the search form of `cinghie\paypal\models\Transactions`.
  */
-class PaymentsSearch extends Payments
+class TransactionsSearch extends Transactions
 {
     /**
      * {@inheritdoc}
@@ -27,9 +26,9 @@ class PaymentsSearch extends Payments
     public function rules()
     {
         return [
-            [['id', 'order_id', 'user_id', 'created_by'], 'integer'],
-            [['payment_id', 'client_token', 'payment_method', 'payment_state', 'created'], 'safe'],
-            [['total_paid'], 'number'],
+            [['id'], 'integer'],
+            [['transaction_id', 'payment_id', 'currency', 'description'], 'safe'],
+            [['subtotal', 'tax', 'shipping', 'total_paid'], 'number'],
         ];
     }
 
@@ -51,17 +50,13 @@ class PaymentsSearch extends Payments
      */
     public function search($params)
     {
-        $query = Payments::find();
-	    $query->joinWith('createdBy');
+        $query = Transactions::find();
 
-	    $dataProvider = new ActiveDataProvider([
-		    'query' => $query,
-		    'sort' => [
-			    'defaultOrder' => [
-				    'created' => SORT_DESC
-			    ],
-		    ],
-	    ]);
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         $this->load($params);
 
@@ -74,17 +69,16 @@ class PaymentsSearch extends Payments
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'order_id' => $this->order_id,
-            'user_id' => $this->user_id,
+            'subtotal' => $this->subtotal,
+            'tax' => $this->tax,
+            'shipping' => $this->shipping,
             'total_paid' => $this->total_paid,
-            'created_by' => $this->created_by
         ]);
 
-        $query->andFilterWhere(['like', 'payment_id', $this->payment_id])
-            ->andFilterWhere(['like', 'client_token', $this->client_token])
-            ->andFilterWhere(['like', 'payment_method', $this->payment_method])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'payment_state', $this->payment_state]);
+        $query->andFilterWhere(['like', 'transaction_id', $this->transaction_id])
+            ->andFilterWhere(['like', 'payment_id', $this->payment_id])
+            ->andFilterWhere(['like', 'currency', $this->currency])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

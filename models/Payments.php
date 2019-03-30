@@ -16,6 +16,7 @@ use Yii;
 use cinghie\traits\CreatedTrait;
 use cinghie\traits\UserHelpersTrait;
 use cinghie\traits\UserTrait;
+use cinghie\traits\ViewsHelpersTrait;
 use PayPal\Api\Payment;
 use yii\db\ActiveRecord;
 
@@ -39,7 +40,7 @@ use yii\db\ActiveRecord;
  */
 class Payments extends ActiveRecord
 {
-	use CreatedTrait, UserHelpersTrait, UserTrait;
+	use CreatedTrait, UserHelpersTrait, UserTrait, ViewsHelpersTrait;
 
     /**
      * @inheritdoc

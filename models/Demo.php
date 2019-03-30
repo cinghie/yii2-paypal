@@ -13,7 +13,6 @@
 namespace cinghie\paypal\models;
 
 use Yii;
-use cinghie\paypal\models\Payments;
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;

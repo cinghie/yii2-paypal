@@ -38,7 +38,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	        ],
 	        [
 		        'attribute' => 'payment_id',
+		        'format' => 'html',
 		        'hAlign' => 'center',
+		        'value' => function ($model) {
+			        $url = urldecode(Url::toRoute(['/paypal/payments/view','id' => $model->id]));
+			        return Html::a($model->payment_id,$url);
+		        }
 	        ],
 	        [
 		        'attribute' => 'payment_method',
@@ -76,14 +81,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		        'hAlign' => 'center',
 		        'width' => '12%',
 	        ],
-            //'client_token',
-            //'currency',
-            //'total_paid',
-            //'payment_state',
-            //'method',
-            //'description',
-            //'created_by',
-            //'created',
+	        [
+		        'attribute' => 'id',
+		        'width' => '5%',
+		        'hAlign' => 'center',
+	        ]
         ],
 		'responsive' => true,
 		'responsiveWrap' => true,

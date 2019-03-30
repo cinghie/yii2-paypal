@@ -2,6 +2,7 @@
 
 namespace cinghie\paypal\controllers;
 
+use cinghie\paypal\models\TransactionsSearch;
 use RuntimeException;
 use Throwable;
 use Yii;
@@ -69,8 +70,12 @@ class PaymentsController extends Controller
      */
     public function actionView($id)
     {
+	    $searchModel = new TransactionsSearch();
+	    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+	        'dataProvider' => $dataProvider
         ]);
     }
 
