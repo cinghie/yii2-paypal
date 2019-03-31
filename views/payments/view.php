@@ -9,8 +9,8 @@ use yii\helpers\Url;
 /* @var $model cinghie\paypal\models\Payments */
 
 $this->title = $model->payment_id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('traits', 'Payments'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('traits', 'PayPal'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('traits', 'Transaction').' '.$this->title;
 
 ?>
 

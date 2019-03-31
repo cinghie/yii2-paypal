@@ -9,7 +9,7 @@ use kartik\grid\GridView;
 use kartik\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('paypal', 'Payments');
+$this->title = Yii::t('traits', 'Paypal');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
