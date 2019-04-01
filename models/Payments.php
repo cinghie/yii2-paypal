@@ -113,9 +113,6 @@ class Payments extends ActiveRecord
 
 	    // Create Transactions
 	    Transactions::createTransactions($paymentID,$payment->getTransactions());
-
-	    echo '<pre>'; var_dump($payments->errors); echo '</pre>';
-    	echo '<pre>'; var_dump($payment); echo '</pre>';
     }
 
 	/**

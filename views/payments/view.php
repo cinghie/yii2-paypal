@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = Yii::t('traits', 'Transaction').' '.$this->titl
 
 <div class="payments-view">
 
-	<?php if(Yii::$app->getModule('articles')->showTitles): ?>
+	<?php if(Yii::$app->getModule('paypal')->showTitles): ?>
         <div class="page-header">
             <h1><?= Html::encode($this->title) ?></h1>
         </div>

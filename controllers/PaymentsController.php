@@ -15,9 +15,11 @@ namespace cinghie\paypal\controllers;
 use RuntimeException;
 use Throwable;
 use Yii;
+use cinghie\paypal\models\Demo;
 use cinghie\paypal\models\Payments;
 use cinghie\paypal\models\PaymentsSearch;
 use cinghie\paypal\models\TransactionsSearch;
+use yii\base\ErrorException;
 use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,7 +42,7 @@ class PaymentsController extends Controller
 		        'rules' => [
 			        [
 				        'allow' => true,
-				        'actions' => ['index','view','delete'],
+				        'actions' => ['index','view','delete','demo'],
 				        'roles' => $this->module->paypalRoles
 			        ],
 		        ],
@@ -52,9 +54,39 @@ class PaymentsController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                    'demo' => ['POST'],
                 ],
             ],
         ];
+    }
+
+	/**
+	 * @param string $type
+	 *
+	 * @return mixed
+	 * @throws ErrorException
+	 */
+	public function actionDemo($type)
+    {
+    	$demo = new Demo();
+
+    	switch ($type)
+	    {
+		    case 'credit_card':
+		    	// Add Credit Card Demo Content
+			    $demo->payByCreditCardDemo();
+			    // Set Success Message
+			    Yii::$app->session->setFlash('success', Yii::t('paypal', 'Credit Card Demo Payment added!'));
+			    break;
+		    case 'paypal':
+			    // Add Paypal Demo Content
+			    $demo->payByPaypalDemo();
+			    // Set Success Message
+			    Yii::$app->session->setFlash('success', Yii::t('paypal', 'Paypal Demo Payment added!'));
+			    break;
+	    }
+
+	    return $this->redirect(['index']);
     }
 
     /**

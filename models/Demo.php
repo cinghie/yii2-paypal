@@ -158,13 +158,14 @@ class Demo
 
 		try {
 			$paymentDemo = $payment->create($this->_apiContext);
-			$approvalUrl = $paymentDemo->getApprovalLink();
-			echo	'<a href="'.$approvalUrl.'">Paga con PayPal</a>';
 		} catch (PayPalConnectionException $e) {
 			new Error($e);
 		} catch (Exception $ex) {
 			die(var_dump($ex));
 		}
+
+		$approvalUrl = $paymentDemo->getApprovalLink();
+		echo '<a href="'.$approvalUrl.'">Paga con PayPal</a>';
 
 		return $paymentDemo;
 	}

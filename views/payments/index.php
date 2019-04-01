@@ -16,17 +16,51 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="payments-index">
 
-	<?php if(Yii::$app->getModule('articles')->showTitles): ?>
+	<?php if(Yii::$app->getModule('paypal')->showTitles): ?>
         <div class="page-header">
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
 	<?php endif ?>
 
+    <?php if(Yii::$app->paypal->checkIsSandbox()): ?>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+
+
+            </div>
+
+            <div class="col-md-6">
+
+                <?= $searchModel->getStandardButton(
+                        'fa fa-credit-card',
+                        Yii::t('paypal','Credit Card Demo Payment'),
+                        ['demo','type' => 'credit_card'],
+                        ['data' => ['method' => 'post']]
+                ) ?>
+
+                <?= $searchModel->getStandardButton(
+                        'fa fa-paypal',
+                        Yii::t('paypal','Paypal Demo Payment'),
+                        ['demo','type' => 'paypal'],
+                        ['data' => ['method' => 'post']]
+                ) ?>
+
+            </div>
+
+        </div>
+
+        <div class="separator"></div>
+
+    <?php endif ?>
+
 	<?= GridView::widget([
 		'dataProvider'=> $dataProvider,
 		'filterModel' => $searchModel,
 		'containerOptions' => [
-			'class' => 'articles-items-pjax-container'
+			'class' => 'paypal-payments-pjax-container'
 		],
 		'pjax' => true,
 		'pjaxSettings'=>[
@@ -72,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        'hAlign' => 'center',
 		        'width' => '8%',
 		        'value' => function ($model) {
-			        /** @var $model cinghie\articles\models\Items */
+			        /** @var $model cinghie\paypal\models\Payments */
 			        return $model->getCreatedByGridView();
 		        }
 	        ],
