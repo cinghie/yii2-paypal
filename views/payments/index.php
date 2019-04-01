@@ -38,14 +38,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         'fa fa-credit-card',
                         Yii::t('paypal','Credit Card Demo Payment'),
                         ['demo','type' => 'credit_card'],
-                        ['data' => ['method' => 'post']]
+                        ['data' => ['method' => 'post']],
+                        'pull-right text-center',
+                        'margin-right: 25px; max-width: 125px;'
                 ) ?>
 
                 <?= $searchModel->getStandardButton(
                         'fa fa-paypal',
                         Yii::t('paypal','Paypal Demo Payment'),
                         ['demo','type' => 'paypal'],
-                        ['data' => ['method' => 'post']]
+                        ['data' => ['method' => 'post'],'style' => 'max-width: 125px;'],
+                        'pull-right text-center',
+                        'margin-right: 25px; max-width: 125px;'
                 ) ?>
 
             </div>

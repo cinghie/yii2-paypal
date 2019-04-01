@@ -60,18 +60,30 @@ Wiki: https://github.com/paypal/PayPal-PHP-SDK/wiki
 
 ## Configuration
 
-Add in your configuration file, in component section:
+Add in your configuration file:
 
 ```
-'paypal' => [
-	'class'        => 'cinghie\paypal\components\Paypal',
-	'clientId'     => 'YOUR_CLIENT_ID',
-	'clientSecret' => 'YOUR_CLIENT_SECRET',
-	'isProduction' => false,
-	'config' => [
-		'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode)
-	]
+use cinghie\paypal\components\Paypal as PaypalComponent;
+use cinghie\paypal\Paypal as PaypalModule;
+
+'components' => [
+	'paypal' => [
+    	'class'        => 'cinghie\paypal\components\Paypal',
+    	'clientId'     => 'YOUR_CLIENT_ID',
+    	'clientSecret' => 'YOUR_CLIENT_SECRET',
+    	'isProduction' => false,
+    	'config' => [
+    		'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode)
+    	]
+    ]
 ],
+
+'modules' => [
+	'paypal' => [ 
+    	'class' => PaypalModule::class, 
+    	'paypalRoles' => ['admin']
+    ]
+]
 ```
 
 <ul>
