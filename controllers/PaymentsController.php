@@ -45,6 +45,10 @@ class PaymentsController extends Controller
 				        'actions' => ['index','view','delete','demo'],
 				        'roles' => $this->module->paypalRoles
 			        ],
+			        [
+				        'allow' => true,
+				        'actions' => ['cancel','return'],
+			        ]
 		        ],
 		        'denyCallback' => static function () {
 			        throw new RuntimeException(Yii::t('traits','You are not allowed to access this page'));
@@ -125,6 +129,16 @@ class PaymentsController extends Controller
 	    ]);
     }
 
+	public function actionCancel()
+	{
+		return $this->render('cancel');
+	}
+
+    public function actionReturn()
+    {
+	    return $this->render('return');
+    }
+
 	/**
 	 * Deletes an existing Payments model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -149,8 +163,8 @@ class PaymentsController extends Controller
      *
      * @param integer $id
      *
-     * @return Payments the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return Payments
+     * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
