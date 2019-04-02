@@ -18,7 +18,7 @@ use yii\base\ActionFilter;
 use yii\web\NotFoundHttpException;
 
 /**
- * BackendFilter is used to allow access only to admin and security controller in frontend
+ * FrontendFilter is used to allow access only to admin and security controller in frontend
  */
 class FrontendFilter extends ActionFilter
 {
@@ -35,7 +35,7 @@ class FrontendFilter extends ActionFilter
      */
     public function beforeAction($action)
     {
-        if ( in_array( $action->controller->id, $this->controllers, true ) ) {
+        if ( in_array( $action->controller->action->id, $this->controllers, true ) ) {
             throw new NotFoundHttpException(Yii::t('traits','Page not found'));
         }
 

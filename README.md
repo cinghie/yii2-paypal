@@ -60,13 +60,14 @@ Wiki: https://github.com/paypal/PayPal-PHP-SDK/wiki
 
 ## Configuration
 
-Add in your configuration file:
+Add in your common configuration file:
 
 ```
 use cinghie\paypal\components\Paypal as PaypalComponent;
 use cinghie\paypal\Paypal as PaypalModule;
 
 'components' => [
+
 	'paypal' => [
     	'class'        => 'cinghie\paypal\components\Paypal',
     	'clientId'     => 'YOUR_CLIENT_ID',
@@ -76,13 +77,17 @@ use cinghie\paypal\Paypal as PaypalModule;
     		'mode' => 'sandbox', // 'sandbox' (development mode) or 'live' (production mode)
     	]
     ]
+    
 ],
 
 'modules' => [
+
 	'paypal' => [ 
     	'class' => PaypalModule::class, 
-    	'paypalRoles' => ['admin']
+    	'paypalRoles' => ['admin'],
+    	'showTitles' => false,
     ]
+    
 ]
 ```
 
@@ -115,6 +120,35 @@ Add in your configuration file, in module section:
 	'showTitles' => false,
 ],
 ```
+
+Add in your backend configuration file:
+
+```
+use cinghie\paypal\filters\BackendFilter as PaypalBackendFilter;
+
+'modules' => [
+
+    'paypal' => [
+        'as backend' => PaypalBackendFilter::class,
+    ],    
+
+]
+```
+
+Add in your frontend configuration file:
+
+```
+use cinghie\paypal\filters\FrontendFilter as PaypalFrontendFilter;
+
+'modules' => [
+
+    'paypal' => [
+        'as backend' => PaypalBackendFilter::class,
+    ],  
+
+]
+```
+
 
 ## Create database schema
 

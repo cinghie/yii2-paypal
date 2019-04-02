@@ -41,13 +41,14 @@ class PaymentsController extends Controller
 		        'class' => AccessControl::class,
 		        'rules' => [
 			        [
-				        'allow' => true,
 				        'actions' => ['index','view','delete','demo'],
+				        'allow' => true,
 				        'roles' => $this->module->paypalRoles
 			        ],
 			        [
-				        'allow' => true,
 				        'actions' => ['cancel','return'],
+				        'allow' => true,
+				        'roles' => ['@']
 			        ]
 		        ],
 		        'denyCallback' => static function () {
@@ -129,12 +130,22 @@ class PaymentsController extends Controller
 	    ]);
     }
 
+	/**
+	 * Unsucces URL for Paypal Cancel URL
+	 *
+	 * @return mixed
+	 */
 	public function actionCancel()
 	{
 		return $this->render('cancel');
 	}
 
-    public function actionReturn()
+	/**
+	 * Success URL for Paypal Return URL
+	 *
+	 * @return mixed
+	 */
+	public function actionReturn()
     {
 	    return $this->render('return');
     }
