@@ -68,7 +68,7 @@ use cinghie\paypal\Paypal as PaypalModule;
 
 'components' => [
 
-	'paypal' => [
+    'paypal' => [
     	'class'        => 'cinghie\paypal\components\Paypal',
     	'clientId'     => 'YOUR_CLIENT_ID',
     	'clientSecret' => 'YOUR_CLIENT_SECRET',
@@ -82,7 +82,7 @@ use cinghie\paypal\Paypal as PaypalModule;
 
 'modules' => [
 
-	'paypal' => [ 
+    'paypal' => [ 
     	'class' => PaypalModule::class, 
     	'paypalRoles' => ['admin'],
     	'showTitles' => false,
