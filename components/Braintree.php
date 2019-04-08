@@ -35,6 +35,9 @@ class Braintree extends Component
 	/** @var string $publicKey */
 	public $publicKey = '';
 
+	/** @var Braintree_Gateway $gateway */
+	public $gateway;
+
 	/**
 	 * Braintree constructor
 	 *
@@ -77,6 +80,24 @@ class Braintree extends Component
 			'privateKey' => $this->publicKey
 		]);
 
-		return new Braintree_Gateway($config);
+		$this->gateway = new Braintree_Gateway($config);
 	}
+
+	/**
+	 * Get Client Token
+	 *
+	 * @param string $customerId
+	 *
+	 * @return string
+	 */
+	public function getClientToken($customerId = '')
+	{
+		if($customerId) {
+			return $this->gateway->clientToken()->generate([
+				'customerId' => $customerId
+			]);
+		}
+
+		return $this->gateway->clientToken()->generate();
+ 	}
 }
