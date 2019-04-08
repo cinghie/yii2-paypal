@@ -151,6 +151,8 @@ use cinghie\paypal\filters\FrontendFilter as PaypalFrontendFilter;
 
 ## Brain Configuration
 
+Add in your common configuration file:
+
 ```
 use cinghie\paypal\components\Braintree as BraintreeComponent;
 
