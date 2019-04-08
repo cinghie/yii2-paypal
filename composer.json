@@ -27,7 +27,6 @@
 	    "ext-openssl": "*",
         "ext-xmlwriter": "*",
 	    "yiisoft/yii2": "~2.0.14",
-	    "braintree/braintree_php": "^3.40.0",
 	    "cinghie/yii2-traits": "@dev",
 	    "hyperwallet/sdk": "^1.3.0",
 	    "paypal/merchant-sdk-php": "^3.12.0",
