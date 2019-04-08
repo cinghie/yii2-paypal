@@ -55,7 +55,7 @@ class Error
 		$this->code    = $this->error->getCode();
 		$this->data    = json_decode($this->error->getData());
 		$this->debugID = $this->data->debug_id;
-		$this->details = $this->data->details;
+		$this->details = isset($this->data->details) ? $this->data->details : [];
 		$this->link    = str_replace('errors','error',$this->data->information_link).'-'.$this->data->name;
 		$this->message = $this->data->message;
 		$this->name    = $this->data->name;
