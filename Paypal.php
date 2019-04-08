@@ -7,7 +7,7 @@
  * @github https://github.com/cinghie/yii2-paypal
  * @license BSD-3-Clause
  * @package yii2-paypal
- * @version 0.2.2
+ * @version 0.2.3
  */
 
 namespace cinghie\paypal;
