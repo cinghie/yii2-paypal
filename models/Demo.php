@@ -13,6 +13,7 @@
 namespace cinghie\paypal\models;
 
 use Yii;
+use cinghie\traits\FakerTraits;
 use PayPal\Api\Address;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -31,6 +32,8 @@ use yii\base\ErrorException;
  */
 class Demo
 {
+	use FakerTraits;
+
 	/** @var ApiContext $_apiContext */
 	private $_apiContext;
 

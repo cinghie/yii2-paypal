@@ -41,7 +41,7 @@ class Paypal extends Component
 	private $_apiContext;
 
 	/**
-	 * @inheritdoc
+	 * Paypal constructor
 	 *
 	 * @param array $config
 	 *
@@ -64,6 +64,7 @@ class Paypal extends Component
 
 		parent::__construct($config);
 	}
+
 	/**
 	 * @inheritdoc
 	 */
