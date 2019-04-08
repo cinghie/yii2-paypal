@@ -149,6 +149,19 @@ use cinghie\paypal\filters\FrontendFilter as PaypalFrontendFilter;
 ]
 ```
 
+## Brain Configuration
+
+```
+use cinghie\paypal\components\Braintree as BraintreeComponent;
+
+'braintree' => [
+	'class' => BraintreeComponent::class,
+	'environment' => 'sandbox',
+	'merchantId' => 'your_merchant_id',
+	'publicKey' => 'your_public_key',
+	'privateKey' => 'your_private_key'
+],
+```
 
 ## Create database schema
 
@@ -161,6 +174,7 @@ $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-paypal/migrations
 ## Use Component
 
 ```
+\Yii::$app->braintree;
 \Yii::$app->paypal;
 ```
 
