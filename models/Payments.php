@@ -92,27 +92,30 @@ class Payments extends ActiveRecord
     {
     	$payments = new self();
 
-    	$currentUser    = $payments->getCurrentUser()->id;
-    	$orderID        = 1;
-    	$paymentAmount  = Transactions::getTransactionTotal($payment->getTransactions());
-    	$paymentCreated = $payments->convertDateToDateTime($payment->getCreateTime());
-    	$paymentID      = $payment->getId();
-    	$paymentMethod  = $payment->getPayer()->getPaymentMethod();
-    	$paymentState   = $payment->getState();
+    	if($payment->getId() !== NULL)
+    	{
+		    $currentUser    = $payments->getCurrentUser()->id;
+		    $orderID        = 1;
+		    $paymentAmount  = Transactions::getTransactionTotal($payment->getTransactions());
+		    $paymentCreated = $payments->convertDateToDateTime($payment->getCreateTime());
+		    $paymentID      = $payment->getId();
+		    $paymentMethod  = $payment->getPayer()->getPaymentMethod();
+		    $paymentState   = $payment->getState();
 
-    	// Create Payments
-	    $payments->created = $paymentCreated;
-	    $payments->created_by = $currentUser;
-    	$payments->order_id = $orderID;
-	    $payments->payment_id = $paymentID;
-	    $payments->payment_method = $paymentMethod;
-    	$payments->payment_state = $paymentState;
-	    $payments->total_paid = $paymentAmount;
-	    $payments->user_id = $currentUser;
-    	$payments->save();
+		    // Create Payments
+		    $payments->created = $paymentCreated;
+		    $payments->created_by = $currentUser;
+		    $payments->order_id = $orderID;
+		    $payments->payment_id = $paymentID;
+		    $payments->payment_method = $paymentMethod;
+		    $payments->payment_state = $paymentState;
+		    $payments->total_paid = $paymentAmount;
+		    $payments->user_id = $currentUser;
+		    $payments->save();
 
-	    // Create Transactions
-	    Transactions::createTransactions($paymentID,$payment->getTransactions());
+		    // Create Transactions
+		    Transactions::createTransactions($paymentID,$payment->getTransactions());
+	    }
     }
 
 	/**

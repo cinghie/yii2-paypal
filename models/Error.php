@@ -91,8 +91,11 @@ class Error
 		$alert .= ' (DEBUG ID: '.$this->debugID.') ';
 		$alert .= $this->message.'<br>';
 
-		foreach($this->details as $detail) {
-			$alert .= $detail->issue.' => '.$detail->field.'<br>';
+		if(count($this->details))
+		{
+			foreach($this->details as $detail) {
+				$alert .= $detail->issue.' => '.$detail->field.'<br>';
+			}
 		}
 
 		$alert .= '<a href="'.$this->link.'" target="_blanck">'.$this->link.'</a><br>';

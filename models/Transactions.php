@@ -119,8 +119,11 @@ class Transactions extends ActiveRecord
 	{
 		$total = 0;
 
-		foreach ($transactions as $transaction) {
-			$total += (float)$transaction->getAmount()->getTotal();
+		if($transactions !== null)
+		{
+			foreach ($transactions as $transaction) {
+				$total += (float)$transaction->getAmount()->getTotal();
+			}
 		}
 
 		return $total;

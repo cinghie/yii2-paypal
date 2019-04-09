@@ -24,7 +24,6 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
-use PayPal\Exception\PayPalConnectionException;
 use yii\base\ErrorException;
 
 /**
@@ -69,7 +68,7 @@ class Demo
 		$card->setNumber('4417119669820331');
 		$card->setType('visa');
 		$card->setExpireMonth('11');
-		$card->setExpireYear('2030');
+		$card->setExpireYear('2020');
 		$card->setCvv2('874');
 		$card->setFirstName('Joe');
 		$card->setLastName('Shopper');
@@ -85,11 +84,11 @@ class Demo
 		$amountDetails = new Details();
 		$amountDetails->setSubtotal('1.00');
 		$amountDetails->setTax('0.22');
-		$amountDetails->setShipping('0.10');
+		$amountDetails->setShipping('0.15');
 
 		$amount = new Amount();
-		$amount->setCurrency('EUR');
-		$amount->setTotal('1.32');
+		$amount->setCurrency('USD');
+		$amount->setTotal('1.37');
 		$amount->setDetails($amountDetails);
 
 		$transaction = new Transaction();
@@ -105,9 +104,10 @@ class Demo
 
 		try {
 			$paymentDemo = $payment->create($this->_apiContext);
-		} catch (PayPalConnectionException $e) {
+		} catch (\PayPal\Exception\PayPalConnectionException $e) {
 			new Error($e);
 		} catch (Exception $ex) {
+			echo 'Ciao';
 			die(var_dump($ex));
 		}
 
@@ -161,7 +161,7 @@ class Demo
 
 		try {
 			$paymentDemo = $payment->create($this->_apiContext);
-		} catch (PayPalConnectionException $e) {
+		} catch (\PayPal\Exception\PayPalConnectionException $e) {
 			new Error($e);
 		} catch (Exception $ex) {
 			die(var_dump($ex));
