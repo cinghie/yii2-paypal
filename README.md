@@ -149,7 +149,7 @@ use cinghie\paypal\filters\FrontendFilter as PaypalFrontendFilter;
 ]
 ```
 
-## Brain Configuration
+## BrainTreee Configuration
 
 Add in your common configuration file:
 
