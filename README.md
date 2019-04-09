@@ -165,6 +165,22 @@ use cinghie\paypal\components\Braintree as BraintreeComponent;
 ],
 ```
 
+## HyperWallet Configuration
+
+Add in your common configuration file:
+
+```
+use cinghie\paypal\components\Hyperwallet as HyperwalletComponent;
+
+'hyperwallet' => [
+	'class' => HyperwalletComponent::class,
+	'username' => 'HYPERWALLET_SERVER',
+	'password' => 'HYPERWALLET_PASSWORD',
+	'token' => 'HYPERWALLET_PROGRAM_TOKEN',
+	'server' => 'https://sandbox.hyperwallet.com'
+],
+```
+
 ## Create database schema
 
 Run the following command:
