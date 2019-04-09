@@ -197,6 +197,7 @@ $ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-paypal/migrations
 
 ```
 \Yii::$app->braintree;
+\Yii::$app->hyperwallet;
 \Yii::$app->paypal;
 ```
 
