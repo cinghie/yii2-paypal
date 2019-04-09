@@ -120,6 +120,7 @@ class Demo
 	 * Paypal Payment Demo
 	 *
 	 * @return Payment
+	 * @see http://paypal.github.io/PayPal-PHP-SDK/sample/doc/payments/CreatePaymentUsingPayPal.html
 	 */
 	public function payByPaypalDemo()
 	{

@@ -21,6 +21,8 @@ use yii\base\InvalidConfigException;
 /**
  * Class Braintree
  *
+ * @property Braintree_Gateway $_gateway
+ *
  * @see https://developers.braintreepayments.com/start/hello-server/php
  */
 class Braintree extends Component
@@ -37,8 +39,8 @@ class Braintree extends Component
 	/** @var string $publicKey */
 	public $publicKey = '';
 
-	/** @var Braintree_Gateway $gateway */
-	public $gateway;
+	/** @var Braintree_Gateway $_gateway */
+	private $_gateway;
 
 	/**
 	 * Braintree constructor
@@ -82,7 +84,7 @@ class Braintree extends Component
 			'privateKey' => $this->privateKey
 		]);
 
-		$this->gateway = new Braintree_Gateway($config);
+		$this->_gateway = new Braintree_Gateway($config);
 	}
 
 	/**
@@ -95,11 +97,11 @@ class Braintree extends Component
 	public function getClientToken($customerId = '')
 	{
 		if($customerId) {
-			return $this->gateway->clientToken()->generate([
+			return $this->_gateway->clientToken()->generate([
 				'customerId' => $customerId
 			]);
 		}
 
-		return $this->gateway->clientToken()->generate();
+		return $this->_gateway->clientToken()->generate();
  	}
 }

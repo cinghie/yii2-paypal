@@ -22,6 +22,8 @@ use yii\base\InvalidConfigException;
  * Class Paypal
  *
  * @property ApiContext $apiContext
+ *
+ * @see https://github.com/paypal/PayPal-PHP-SDK/wiki
  */
 class Paypal extends Component
 {
@@ -45,6 +47,7 @@ class Paypal extends Component
 	 *
 	 * @param array $config
 	 *
+	 * @see https://github.com/paypal/PayPal-PHP-SDK/wiki/Making-First-Call
 	 * @throws InvalidConfigException
 	 */
 	public function __construct(array $config = [])
@@ -66,7 +69,9 @@ class Paypal extends Component
 	}
 
 	/**
-	 * @inheritdoc
+	 * Paypal init
+	 *
+	 * @see https://github.com/paypal/PayPal-PHP-SDK/wiki/Adding-Configurations
 	 */
 	public function init()
 	{
