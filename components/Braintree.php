@@ -20,6 +20,8 @@ use yii\base\InvalidConfigException;
 
 /**
  * Class Braintree
+ *
+ * @see https://developers.braintreepayments.com/start/hello-server/php
  */
 class Braintree extends Component
 {
@@ -76,8 +78,8 @@ class Braintree extends Component
 		$config = new Braintree_Configuration([
 			'environment' => $this->environment,
 			'merchantId' => $this->merchantId ,
-			'publicKey' => $this->privateKey,
-			'privateKey' => $this->publicKey
+			'publicKey' => $this->publicKey,
+			'privateKey' => $this->privateKey
 		]);
 
 		$this->gateway = new Braintree_Gateway($config);
