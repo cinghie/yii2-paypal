@@ -79,15 +79,24 @@ class PaymentsController extends Controller
 	    {
 		    case 'credit_card':
 		    	// Add Credit Card Demo Content
-			    $demo->payByCreditCardDemo();
-			    // Set Success Message
-			    Yii::$app->session->setFlash('success', Yii::t('paypal', 'Credit Card Demo Payment added!'));
+			    $payByCreditCardDemo = $demo->payByCreditCardDemo();
+
+			    if($payByCreditCardDemo->getId() !== NULL) {
+				    // Set Success Message
+				    Yii::$app->session->setFlash('success', Yii::t('paypal', 'Credit Card Demo Payment added!'));
+			    }
+
 			    break;
-		    case 'paypal':
+
+			case 'paypal':
 			    // Add Paypal Demo Content
-			    $demo->payByPaypalDemo();
-			    // Set Success Message
-			    Yii::$app->session->setFlash('success', Yii::t('paypal', 'Paypal Demo Payment added!'));
+			    $payByPaypalDemo = $demo->payByPaypalDemo();
+
+				if($payByPaypalDemo->getId() !== NULL) {
+					// Set Success Message
+					Yii::$app->session->setFlash('success', Yii::t('paypal', 'Paypal Demo Payment added!'));
+				}
+
 			    break;
 	    }
 

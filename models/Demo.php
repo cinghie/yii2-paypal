@@ -88,7 +88,7 @@ class Demo
 
 		$amount = new Amount();
 		$amount->setCurrency('USD');
-		$amount->setTotal('1.37');
+		$amount->setTotal('7.47');
 		$amount->setDetails($amountDetails);
 
 		$transaction = new Transaction();
