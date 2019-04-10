@@ -1,4 +1,11 @@
 # Yii2 PayPal
+
+![Latest Stable Version](https://img.shields.io/packagist/v/cinghie/yii2-paypal.svg)
+![Latest Release Date](https://img.shields.io/github/release-date/cinghie/yii2-paypal.svg)
+![Latest Commit](https://img.shields.io/github/last-commit/cinghie/yii2-paypal.svg)
+[![Total Downloads](https://img.shields.io/packagist/dt/cinghie/yii2-paypal.svg)](https://packagist.org/packages/cinghie/yii2-paypal)
+![License](https://img.shields.io/packagist/l/cinghie/yii2-paypal.svg)
+
 Yii2 PayPal Extension to manage: 
 
  - PayPal Payments: https://www.paypal.com
