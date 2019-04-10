@@ -1,9 +1,9 @@
 # Yii2 PayPal
 Yii2 PayPal Extension to manage: 
 
- - PayPal Payments
- - BrainTree Payments 
- - HyperWallet Payments
+ - PayPal Payments: https://www.paypal.com
+ - BrainTree Payments (PayPal Service): https://www.braintreepayments.com
+ - HyperWallet Payments (PayPal Service): https://www.hyperwallet.com
 
 ## Installation
 
