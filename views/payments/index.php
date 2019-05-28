@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ) ?>
 
                 <?= $searchModel->getStandardButton(
-                        'fa fa-paypal',
+                        'fab fa-paypal',
                         Yii::t('paypal','Paypal Demo Payment'),
                         ['demo','type' => 'paypal'],
                         ['data' => ['method' => 'post'],'style' => 'max-width: 125px;'],

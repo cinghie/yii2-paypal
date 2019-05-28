@@ -49,6 +49,8 @@ $this->params['breadcrumbs'][] = Yii::t('traits', 'Transaction').' '.$this->titl
 			    'hover' => true,
 			    'mode' => DetailView::MODE_VIEW,
 			    'panel' => [
+				    'after' => false,
+				    'before' => false,
 				    'heading' => '<h3 class="panel-title"><i class="fa fa-paypal"></i> '.Yii::t('traits', 'Payments').'</h3>',
 				    'type' => DetailView::TYPE_INFO,
 			    ],
@@ -150,8 +152,10 @@ $this->params['breadcrumbs'][] = Yii::t('traits', 'Transaction').' '.$this->titl
 		        'responsive' => true,
 		        'hover' => true,
 		        'panel' => [
-			        'heading'    => '<h3 class="panel-title"><i class="fa fa-th-list"></i> '.Yii::t('newsletters', 'Subscribers').'</h3>',
-			        'type'       => 'success',
+			        'after' => false,
+			        'before' => false,
+			        'heading' => '<h3 class="panel-title"><i class="fa fa-th-list"></i> '.Yii::t('newsletters', 'Subscribers').'</h3>',
+			        'type' => 'success',
 		        ],
 	        ]) ?>
 
