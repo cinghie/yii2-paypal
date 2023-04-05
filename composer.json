@@ -27,12 +27,13 @@
 	"ext-openssl": "*",
         "ext-xmlwriter": "*",
 	"yiisoft/yii2": "~2.0.14",
-	"cinghie/yii2-traits": "@dev",
-        "braintree/braintree_php": "^3.40.0",
-	"braintree/braintreehttp": "^0.3.0",
-        "hyperwallet/sdk": "^1.3.0",
+        "braintree/braintree_php": "^6.11.1",
+        "hyperwallet/php-sdk": "^2.2.4",
         "paypal/merchant-sdk-php": "^3.12.0",
         "paypal/rest-api-sdk-php": "^1.14.0"
+    },
+    "require-dev": {
+        "cinghie/yii2-traits": "@dev",
     },
     "autoload": {
         "psr-4": {
