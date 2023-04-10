@@ -21,19 +21,16 @@
     "require": {
 	"php": ">=5.5.0",
 	"ext-curl": "*",
-        "ext-dom": "*",
-        "ext-hash": "*",
 	"ext-json": "*",
-	"ext-openssl": "*",
-        "ext-xmlwriter": "*",
 	"yiisoft/yii2": "~2.0.14",
         "braintree/braintree_php": "^6.11.1",
         "hyperwallet/php-sdk": "^2.2.4",
         "paypal/merchant-sdk-php": "^3.12.0",
-        "paypal/rest-api-sdk-php": "^1.14.0"
+        "paypal/rest-api-sdk-php": "^1.14.0",
+        "cinghie/yii2-traits": "@dev"
     },
     "require-dev": {
-        "cinghie/yii2-traits": "@dev",
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
