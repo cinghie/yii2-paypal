@@ -26,7 +26,7 @@
         "braintree/braintree_php": "^6.11.2",
         "hyperwallet/sdk": "^2.2.4",
         "paypal/merchant-sdk-php": "@dev",
-        "paypal/rest-api-sdk-php": "@dev",
+        "paypal/rest-api-sdk-php": "dev-main",
         "cinghie/yii2-traits": "@dev"
     },
     "require-dev": {
