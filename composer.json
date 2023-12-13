@@ -22,14 +22,14 @@
 	"php": ">=5.5.0",
 	"ext-curl": "*",
 	"ext-json": "*",
-	"yiisoft/yii2": "~2.0.14",
-        "braintree/braintree_php": "^6.11.2",
-        "hyperwallet/sdk": "^2.2.4",
-        "paypal/merchant-sdk-php": "@dev",
-        "paypal/rest-api-sdk-php": "dev-main",
-        "cinghie/yii2-traits": "@dev"
+	"yiisoft/yii2": "~2.0.14"
     },
     "require-dev": {
+	"braintree/braintree_php": "@dev",
+        "cinghie/yii2-traits": "@dev",
+        "hyperwallet/sdk": "@dev",
+        "paypal/merchant-sdk-php": "@dev",
+        "paypal/rest-api-sdk-php": "@dev",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
